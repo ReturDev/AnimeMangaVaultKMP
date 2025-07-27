@@ -35,6 +35,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             //Ktor
             implementation(libs.ktor.client.okhttp)
+            //Koin
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -50,6 +52,13 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.negotiation)
             implementation(libs.kotlin.serialization)
+
+            //Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
         }
         iosMain.dependencies {
             //Ktor
