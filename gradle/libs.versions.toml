@@ -15,6 +15,7 @@ junit = "4.13.2"
 kotlin = "2.2.0"
 ktor = "3.2.2"
 koin-bom = "4.1.0"
+kotlinxDatetime = "0.7.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -42,6 +43,9 @@ koin-core = { module = "io.insert-koin:koin-core"}
 koin-android = { group = "io.insert-koin", name = "koin-android"}
 koin-compose = { module = "io.insert-koin:koin-compose"}
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel"}
+
+#Date
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
