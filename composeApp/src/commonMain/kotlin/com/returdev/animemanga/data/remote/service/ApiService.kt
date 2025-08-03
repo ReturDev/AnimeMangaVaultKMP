@@ -266,6 +266,28 @@ class ApiService(private val httpClient : HttpClient) {
         )
     }
 
+/**
+ * Fetches the list of available anime genres.
+ *
+ * @return HttpResponse containing the anime genres data.
+ */
+suspend fun getAnimeGenres() : HttpResponse {
+    return getResponse(
+        urlString = "/genres/anime"
+    )
+}
+
+/**
+ * Fetches the list of available manga genres.
+ *
+ * @return HttpResponse containing the manga genres data.
+ */
+suspend fun getMangaGenres() : HttpResponse {
+    return getResponse(
+        urlString = "/genres/manga"
+    )
+}
+
     /**
      * Internal helper to perform a GET request with optional query parameters.
      *
