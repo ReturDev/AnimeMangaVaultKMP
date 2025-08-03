@@ -10,5 +10,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class GenreDataComponentResponse(
-    @SerialName("mal_id") val id : Int
+    @SerialName("mal_id") val id : Int,
+    @SerialName("name") val name: String
 )
