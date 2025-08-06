@@ -12,13 +12,13 @@ interface ApiRequestManager {
     /**
      * Executes a suspendable HTTP request and parses the response into an [ApiResponse] of type [T].
      *
-     * @param request A suspend function that performs the HTTP request and returns an [HttpResponse].
      * @param typeInfo The [TypeInfo] describing the expected type of the response body.
+     * @param request A suspend function that performs the HTTP request and returns an [HttpResponse].
      * @return An [ApiResponse] containing the parsed result of type [T].
      */
     suspend fun <T> executeRequest(
-        request : suspend () -> HttpResponse,
-        typeInfo : TypeInfo
+        typeInfo : TypeInfo,
+        request : suspend () -> HttpResponse
     ) : ApiResponse<T>
 
 }

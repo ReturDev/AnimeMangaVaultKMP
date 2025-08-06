@@ -22,16 +22,21 @@ class ApiRequestManagerImpl(
         const val DELAY_MULTIPLIER = 1.5f
     }
 
-    /**
+
+/**
      * Executes an HTTP request with retry logic and exponential backoff.
      *
-     * @param request Lambda that performs the HTTP request and returns an HttpResponse.
-     * @return ApiResponse\<T\> containing either the successful result or an error.
-     * @throws Exception if all retries fail.
+     * @param typeInfo The type information used to deserialize the response body.
+     * @param request A suspending lambda that performs the HTTP request and returns an [HttpResponse].
+     * @return [ApiResponse] containing the result of the request, which can be a success, failure, or connection failure.
+     *
+     * The function will retry the request up to [MAX_RETRIES] times if a "Too Many Requests" error is received,
+     * applying exponential backoff between retries. If a successful response is received, it returns a success response.
+     * For other error statuses, it returns a failure response. If an [IOException] occurs, it returns a connection failure.
      */
     override suspend fun <T> executeRequest(
-        request : suspend () -> HttpResponse,
-        typeInfo : TypeInfo
+        typeInfo : TypeInfo,
+        request : suspend () -> HttpResponse
     ) : ApiResponse<T> {
 
         var retries = 1
@@ -73,5 +78,4 @@ class ApiRequestManagerImpl(
         return result!!
 
     }
-
 }
