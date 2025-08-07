@@ -13,6 +13,10 @@ import io.ktor.util.StringValues
  */
 class ApiService(private val httpClient : HttpClient) {
 
+    companion object{
+        const val MAX_REQUEST_LIMIT = 25
+    }
+
     /**
      * Fetches anime details by its ID.
      *
@@ -54,6 +58,7 @@ class ApiService(private val httpClient : HttpClient) {
     suspend fun animeSearch(
         page : String,
         limit : String,
+        isAdultEntriesDisabled : Boolean,
         title : String?,
         type : String?,
         score : String?,
@@ -71,6 +76,7 @@ class ApiService(private val httpClient : HttpClient) {
             parameters = StringValues.Companion.build {
                 append("page", page)
                 append("limit", limit)
+                append("sfw",isAdultEntriesDisabled.toString())
                 title?.let { append("q", it) }
                 type?.let { append("type", it) }
                 score?.let { append("score", it) }
@@ -82,6 +88,7 @@ class ApiService(private val httpClient : HttpClient) {
                 producers?.let { append("producers", it) }
                 startDate?.let { append("start_date", it) }
                 endDate?.let { append("end_date", it) }
+
             }
         )
     }
@@ -106,6 +113,7 @@ class ApiService(private val httpClient : HttpClient) {
     suspend fun mangaSearch(
         page : String,
         limit : String,
+        isAdultEntriesDisabled : Boolean,
         title : String?,
         type : String?,
         score : String?,
@@ -122,6 +130,7 @@ class ApiService(private val httpClient : HttpClient) {
             parameters = StringValues.Companion.build {
                 append("page", page)
                 append("limit", limit)
+                append("sfw",isAdultEntriesDisabled.toString())
                 title?.let { append("q", it) }
                 type?.let { append("type", it) }
                 score?.let { append("score", it) }
@@ -147,13 +156,15 @@ class ApiService(private val httpClient : HttpClient) {
     suspend fun getTopAnime(
         page : String,
         limit : String,
-        type : String?
+        isAdultEntriesDisabled : Boolean,
+        type : String?,
     ) : HttpResponse {
         return getResponse(
             urlString = "/top/anime",
             parameters = StringValues.Companion.build {
                 append("page", page)
                 append("limit", limit)
+                append("sfw",isAdultEntriesDisabled.toString())
                 type?.let { append("type", it) }
             }
         )
@@ -170,6 +181,7 @@ class ApiService(private val httpClient : HttpClient) {
     suspend fun getTopManga(
         page : String,
         limit : String,
+        isAdultEntriesDisabled : Boolean,
         type : String?
     ) : HttpResponse {
         return getResponse(
@@ -177,6 +189,7 @@ class ApiService(private val httpClient : HttpClient) {
             parameters = StringValues.Companion.build {
                 append("page", page)
                 append("limit", limit)
+                append("sfw",isAdultEntriesDisabled.toString())
                 type?.let { append("type", it) }
             }
         )
@@ -193,6 +206,7 @@ class ApiService(private val httpClient : HttpClient) {
     suspend fun getAnimeCurrentSeason(
         page : String,
         limit : String,
+        isAdultEntriesDisabled : Boolean,
         type : String?
     ) : HttpResponse {
         return getResponse(
@@ -200,6 +214,7 @@ class ApiService(private val httpClient : HttpClient) {
             parameters = StringValues.Companion.build {
                 append("page", page)
                 append("limit", limit)
+                append("sfw", isAdultEntriesDisabled.toString())
                 type?.let { append("type", it) }
             }
         )
@@ -220,6 +235,7 @@ class ApiService(private val httpClient : HttpClient) {
         season : String,
         page : String,
         limit : String,
+        isAdultEntriesDisabled : Boolean,
         type : String?
     ) : HttpResponse {
         return getResponse(
@@ -227,6 +243,7 @@ class ApiService(private val httpClient : HttpClient) {
             parameters = StringValues.Companion.build {
                 append("page", page)
                 append("limit", limit)
+                append("sfw", isAdultEntriesDisabled.toString())
                 type?.let { append("type", it) }
             }
         )
@@ -254,6 +271,7 @@ class ApiService(private val httpClient : HttpClient) {
     suspend fun getAnimeSeasonUpcoming(
         page : String,
         limit : String,
+        isAdultEntriesDisabled : Boolean,
         type : String?
     ) : HttpResponse {
         return getResponse(
@@ -261,6 +279,7 @@ class ApiService(private val httpClient : HttpClient) {
             parameters = StringValues.Companion.build {
                 append("page", page)
                 append("limit", limit)
+                append("sfw", isAdultEntriesDisabled.toString())
                 type?.let { append("type", it) }
             }
         )
