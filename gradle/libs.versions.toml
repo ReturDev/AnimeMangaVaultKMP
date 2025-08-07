@@ -16,6 +16,9 @@ kotlin = "2.2.0"
 ktor = "3.2.2"
 koin-bom = "4.1.0"
 kotlinxDatetime = "0.7.1"
+roomCommon = "2.7.2"
+androidx-sqliteBundled = "2.5.2"
+ksp = "2.2.0-2.0.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -47,6 +50,11 @@ koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel"}
 #Date
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime"}
 
+# Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomCommon" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCommon" }
+androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "androidx-sqliteBundled" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -54,3 +62,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMul
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kspCompose = { id = "com.google.devtools.ksp", version.ref = "ksp" }

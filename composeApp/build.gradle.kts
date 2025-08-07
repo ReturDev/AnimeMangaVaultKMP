@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kspCompose)
 }
 
 kotlin {
@@ -63,6 +64,11 @@ kotlin {
             //Date
             implementation(libs.kotlinx.datetime)
 
+            //Room
+            implementation(libs.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
+
+
         }
         iosMain.dependencies {
             //Ktor
@@ -101,7 +107,19 @@ android {
     }
 }
 
+ksp {
+    arg("room.schemaLocation", "${projectDir}/schemas")
+}
+
+
 dependencies {
+
+    add("kspCommonMainMetadata", libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+
     debugImplementation(compose.uiTooling)
 }
 
