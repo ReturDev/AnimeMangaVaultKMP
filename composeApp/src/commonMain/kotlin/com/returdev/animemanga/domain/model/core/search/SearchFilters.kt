@@ -1,6 +1,7 @@
 package com.returdev.animemanga.domain.model.core.search
 
 import com.returdev.animemanga.domain.model.core.search.anime.AnimeOrderByFilters
+import com.returdev.animemanga.domain.model.core.search.anime.AnimeRatingFilters
 import com.returdev.animemanga.domain.model.core.search.anime.AnimeStatusFilters
 import com.returdev.animemanga.domain.model.core.search.anime.AnimeTypeFilters
 import github.returdev.animemangavault.core.model.core.filters.common.SortDirection
@@ -32,10 +33,10 @@ sealed class SearchFilters{
     abstract val type : Any?
     abstract val status : Any?
     abstract val score : Int?
-    abstract val genreIds : List<String>
+    abstract val genreIds : List<Int>
     abstract val orderBy : Any?
     abstract val sort : SortDirection
-    abstract val publisherIds : List<String>
+    abstract val publisherIds : List<Int>
     abstract val startDate : LocalDate?
     abstract val endDate : LocalDate?
 
@@ -55,13 +56,14 @@ sealed class SearchFilters{
     data class AnimeFilters(
         override val type: AnimeTypeFilters? = null,
         override val status: AnimeStatusFilters? = null,
-        override val genreIds: List<String> = emptyList(),
+        override val genreIds: List<Int> = emptyList(),
         override val orderBy: AnimeOrderByFilters? = null,
         override val sort: SortDirection = SortDirection.ASCENDANT,
         override val score : Int? = null,
-        override val publisherIds : List<String> = emptyList(),
+        override val publisherIds : List<Int> = emptyList(),
         override val startDate : LocalDate? = null,
-        override val endDate : LocalDate? = null
+        override val endDate : LocalDate? = null,
+        val rating : AnimeRatingFilters? = null
     ) : SearchFilters()
 
     /**
@@ -80,11 +82,11 @@ sealed class SearchFilters{
     data class MangaFilters(
         override val type: MangaTypeFilters? = null,
         override val status: MangaStatusFilters? = null,
-        override val genreIds: List<String> = emptyList(),
+        override val genreIds: List<Int> = emptyList(),
         override val orderBy: MangaOrderByFilters? = null,
         override val sort: SortDirection = SortDirection.ASCENDANT,
         override val score : Int?,
-        override val publisherIds : List<String> = emptyList(),
+        override val publisherIds : List<Int> = emptyList(),
         override val startDate : LocalDate? = null,
         override val endDate : LocalDate? = null
     ) : SearchFilters()
