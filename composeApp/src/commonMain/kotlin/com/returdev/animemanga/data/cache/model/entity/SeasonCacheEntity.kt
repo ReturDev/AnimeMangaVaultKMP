@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE,
     )]
 )
-data class SeasonsCacheEntity(
+data class SeasonCacheEntity(
     @PrimaryKey(autoGenerate = true) val id : Int = 0,
     val year : Int,
     val season : String
