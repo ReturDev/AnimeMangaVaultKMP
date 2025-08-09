@@ -10,7 +10,7 @@ import com.returdev.animemanga.data.cache.model.entity.GenreCacheEntity
  * Data Access Object (DAO) for managing genre entities in the local cache database.
  */
 @Dao
-interface GenresCacheDAO {
+interface GenreCacheDAO {
 
     /**
      * Inserts a list of genre entities into the database.
