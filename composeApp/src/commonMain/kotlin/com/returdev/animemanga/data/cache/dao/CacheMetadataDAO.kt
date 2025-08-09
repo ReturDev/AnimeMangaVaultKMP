@@ -2,6 +2,7 @@ package com.returdev.animemanga.data.cache.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.returdev.animemanga.data.cache.model.entity.MetadataEntity
 
@@ -18,23 +19,14 @@ interface CacheMetadataDAO {
      * @return [MetadataEntity] corresponding to the given name.
      */
     @Query("SELECT * FROM metadata_table WHERE name = :name")
-    fun getMetadataEntityByName(name : String) : MetadataEntity
+    fun getMetadataEntityByName(name : String) : MetadataEntity?
 
     /**
      * Inserts a new metadata entity into the database.
      *
      * @param metadataEntity The [MetadataEntity] to be saved.
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveMetadataEntity(metadataEntity: MetadataEntity)
-
-    /**
-     * Updates the value of an existing metadata entity identified by its name.
-     *
-     * @param name The unique key or identifier of the metadata entry.
-     * @param value The new value to set for the metadata entry.
-     */
-    @Query("UPDATE metadata_table SET value = :value WHERE name = :name")
-    fun updateMetadataEntity(name: String, value: String)
 
 }
