@@ -19,6 +19,7 @@ kotlinxDatetime = "0.7.1"
 roomCommon = "2.7.2"
 androidx-sqliteBundled = "2.5.2"
 ksp = "2.2.0-2.0.2"
+pagingCommon = "3.3.0-alpha02-0.5.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -54,6 +55,10 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomCommon" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCommon" }
 androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "androidx-sqliteBundled" }
+
+#Paging3
+paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingCommon" }
+paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingCommon" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -68,6 +68,10 @@ kotlin {
             implementation(libs.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
 
+            //Paging
+            implementation(libs.paging.compose.common)
+            implementation(libs.paging.common)
+
 
         }
         iosMain.dependencies {
