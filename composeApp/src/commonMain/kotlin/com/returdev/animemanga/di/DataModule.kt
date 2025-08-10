@@ -1,5 +1,11 @@
 package com.returdev.animemanga.di
 
+import com.returdev.animemanga.data.cache.datasource.CacheMetadataDataSource
+import com.returdev.animemanga.data.cache.datasource.SeasonCacheDataSource
+import com.returdev.animemanga.data.cache.datasource.genre.AnimeCacheDataSource
+import com.returdev.animemanga.data.cache.datasource.genre.MangaCacheDataSource
+import com.returdev.animemanga.data.remote.core.util.ApiRequestManager
+import com.returdev.animemanga.data.remote.core.util.ApiRequestManagerImpl
 import com.returdev.animemanga.data.remote.service.ApiService
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
@@ -26,4 +32,9 @@ val datamodule = module {
         }
     }
     factoryOf(::ApiService)
+    factory<ApiRequestManager>{ ApiRequestManagerImpl() }
+    factoryOf(::AnimeCacheDataSource)
+    factoryOf(::MangaCacheDataSource)
+    factoryOf(::CacheMetadataDataSource)
+    factoryOf(::SeasonCacheDataSource)
 }
