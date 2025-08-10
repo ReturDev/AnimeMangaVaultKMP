@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.returdev.animemanga.data.cache.model.entity.GenreCacheEntity
 
 /**
@@ -43,5 +44,11 @@ interface GenreCacheDAO {
      */
     @Query("DELETE FROM genres_table")
     fun clearGenres()
+
+    @Transaction
+    fun replaceGenres(genres: List<GenreCacheEntity>) {
+        clearGenres()
+        saveGenres(genres)
+    }
 
 }
