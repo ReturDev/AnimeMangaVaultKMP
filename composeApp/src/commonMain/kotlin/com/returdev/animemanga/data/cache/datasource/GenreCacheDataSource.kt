@@ -1,4 +1,4 @@
-package com.returdev.animemanga.data.cache.datasource.season
+package com.returdev.animemanga.data.cache.datasource
 
 import com.returdev.animemanga.data.cache.dao.GenreCacheDAO
 import com.returdev.animemanga.data.cache.model.entity.GenreCacheEntity

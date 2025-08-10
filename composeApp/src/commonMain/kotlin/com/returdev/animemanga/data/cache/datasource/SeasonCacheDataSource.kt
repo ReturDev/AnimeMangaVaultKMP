@@ -1,4 +1,4 @@
-package com.returdev.animemanga.data.cache.datasource.season
+package com.returdev.animemanga.data.cache.datasource
 
 import androidx.room.Transactor
 import androidx.room.useWriterConnection
