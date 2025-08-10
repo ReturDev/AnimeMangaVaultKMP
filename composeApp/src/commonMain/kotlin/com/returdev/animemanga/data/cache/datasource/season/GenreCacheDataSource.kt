@@ -1,6 +1,5 @@
 package com.returdev.animemanga.data.cache.datasource.season
 
-import androidx.room.Transaction
 import com.returdev.animemanga.data.cache.dao.GenreCacheDAO
 import com.returdev.animemanga.data.cache.model.entity.GenreCacheEntity
 
@@ -19,7 +18,7 @@ class GenreCacheDataSource(
      *
      * @param newGenres The list of [GenreCacheEntity] to sync with the local cache.
      */
-    fun syncGenres(newGenres: List<GenreCacheEntity>) : Boolean {
+    suspend fun syncGenres(newGenres: List<GenreCacheEntity>) : Boolean {
         val localGenres = genreCacheDAO.getGenres()
 
         if (!hasSameGenres(localGenres, newGenres)) {
@@ -36,7 +35,7 @@ class GenreCacheDataSource(
      * @param id The unique identifier of the genre.
      * @return The [GenreCacheEntity] with the given ID, or null if not found.
      */
-    fun getGenreById(id: Int): GenreCacheEntity? =
+    suspend fun getGenreById(id: Int): GenreCacheEntity? =
         genreCacheDAO.getGenreById(id)
 
     /**
@@ -44,7 +43,7 @@ class GenreCacheDataSource(
      *
      * @return A list of [GenreCacheEntity] objects.
      */
-    fun getGenres(): List<GenreCacheEntity> =
+    suspend fun getGenres(): List<GenreCacheEntity> =
         genreCacheDAO.getGenres()
 
     /**
