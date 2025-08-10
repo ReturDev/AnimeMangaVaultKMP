@@ -34,24 +34,24 @@ class CacheMetadataDataSource(
      *
      * @return The [LocalDate] of the last update, or null if not available.
      */
-    fun getGenresLastModifiedDate() : LocalDate? = getLastModifiedDate(UPDATED_GENRES_METADATA_KEY)
+    suspend fun getGenresLastModifiedDate() : LocalDate? = getLastModifiedDate(UPDATED_GENRES_METADATA_KEY)
 
     /**
      * Retrieves the last modified date for seasons metadata.
      *
      * @return The [LocalDate] of the last update, or null if not available.
      */
-    fun getSeasonsLastModifiedDate() : LocalDate? = getLastModifiedDate(UPDATED_SEASONS_METADATA_KEY)
+    suspend fun getSeasonsLastModifiedDate() : LocalDate? = getLastModifiedDate(UPDATED_SEASONS_METADATA_KEY)
 
     /**
      * Updates the last modified date for genres metadata to the current date and time.
      */
-    fun updateGenresLastModifiedDate() = updateLastModifiedDate(UPDATED_GENRES_METADATA_KEY)
+    suspend fun updateGenresLastModifiedDate() = updateLastModifiedDate(UPDATED_GENRES_METADATA_KEY)
 
     /**
      * Updates the last modified date for seasons metadata to the current date and time.
      */
-    fun updateSeasonsLastModifiedDate() = updateLastModifiedDate(UPDATED_SEASONS_METADATA_KEY)
+    suspend fun updateSeasonsLastModifiedDate() = updateLastModifiedDate(UPDATED_SEASONS_METADATA_KEY)
 
     /**
      * Retrieves the last modified date for a given metadata key.
@@ -59,7 +59,7 @@ class CacheMetadataDataSource(
      * @param key The metadata key to look up.
      * @return The [LocalDate] of the last update, or null if not available.
      */
-    private fun getLastModifiedDate(key : String): LocalDate? {
+    private suspend fun getLastModifiedDate(key : String): LocalDate? {
         val metadataValue = metadataDAO.getMetadataEntityByName(key)?.value
         return getLocalDateFromString(metadataValue)
     }
@@ -70,7 +70,7 @@ class CacheMetadataDataSource(
      * @param dateString The date string to parse.
      * @return The parsed [LocalDate], or null if the string is null.
      */
-    private fun getLocalDateFromString(dateString: String?): LocalDate? {
+    private suspend fun getLocalDateFromString(dateString: String?): LocalDate? {
         return dateString?.let {
             LocalDate.parse(it, DATE_ISO_FORMAT)
         }
@@ -81,7 +81,7 @@ class CacheMetadataDataSource(
      *
      * @param key The metadata key to update.
      */
-    private fun updateLastModifiedDate(
+    private suspend fun updateLastModifiedDate(
         key: String
     ) {
 
