@@ -19,7 +19,7 @@ interface SeasonCacheDAO {
      * @param season The [SeasonCacheEntity] object to be saved.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun saveSeason(season : SeasonCacheEntity)
+    suspend fun saveSeason(season : SeasonCacheEntity)
 
     /**
      * Retrieves all season entities for a specific year from the database.
@@ -28,7 +28,7 @@ interface SeasonCacheDAO {
      * @return List of [SeasonCacheEntity] objects for the given year.
      */
     @Query("SELECT * FROM seasons_table WHERE year = :year")
-    fun getSeasonsByYear(
+    suspend fun getSeasonsByYear(
         year : Int
     ) : List<SeasonCacheEntity>
 
@@ -39,6 +39,6 @@ interface SeasonCacheDAO {
      * @return The latest [SeasonCacheEntity] or null if none exist.
      */
     @Query("SELECT * FROM seasons_table ORDER BY year DESC LIMIT 1")
-    fun getLastSeason() : SeasonCacheEntity?
+    suspend fun getLastSeason() : SeasonCacheEntity?
 
 }

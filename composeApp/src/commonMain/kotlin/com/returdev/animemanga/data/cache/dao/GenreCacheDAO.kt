@@ -20,7 +20,7 @@ interface GenreCacheDAO {
      * @param genres List of [GenreCacheEntity] objects to be saved.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun saveGenres(genres: List<GenreCacheEntity>)
+    suspend fun saveGenres(genres: List<GenreCacheEntity>)
 
     /**
      * Retrieves all genre entities from the database.
@@ -28,7 +28,7 @@ interface GenreCacheDAO {
      * @return List of [GenreCacheEntity] objects.
      */
     @Query("SELECT * FROM genres_table")
-    fun getGenres(): List<GenreCacheEntity>
+    suspend fun getGenres(): List<GenreCacheEntity>
 
     /**
      * Retrieves a genre entity by its unique identifier.
@@ -37,16 +37,16 @@ interface GenreCacheDAO {
      * @return [GenreCacheEntity] corresponding to the given id.
      */
     @Query("SELECT * FROM genres_table WHERE id = :id")
-    fun getGenreById(id: Int): GenreCacheEntity
+    suspend fun getGenreById(id: Int): GenreCacheEntity
 
     /**
      * Deletes all genre entities from the database.
      */
     @Query("DELETE FROM genres_table")
-    fun clearGenres()
+    suspend fun clearGenres()
 
     @Transaction
-    fun replaceGenres(genres: List<GenreCacheEntity>) {
+    suspend fun replaceGenres(genres: List<GenreCacheEntity>) {
         clearGenres()
         saveGenres(genres)
     }

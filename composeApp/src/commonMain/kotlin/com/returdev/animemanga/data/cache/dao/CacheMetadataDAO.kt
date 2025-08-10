@@ -19,7 +19,7 @@ interface CacheMetadataDAO {
      * @return [MetadataEntity] corresponding to the given name.
      */
     @Query("SELECT * FROM metadata_table WHERE name = :name")
-    fun getMetadataEntityByName(name : String) : MetadataEntity?
+    suspend fun getMetadataEntityByName(name : String) : MetadataEntity?
 
     /**
      * Inserts a new metadata entity into the database.
@@ -27,6 +27,6 @@ interface CacheMetadataDAO {
      * @param metadataEntity The [MetadataEntity] to be saved.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveMetadataEntity(metadataEntity: MetadataEntity)
+    suspend fun saveMetadataEntity(metadataEntity: MetadataEntity)
 
 }

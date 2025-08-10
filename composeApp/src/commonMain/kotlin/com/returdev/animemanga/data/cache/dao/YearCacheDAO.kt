@@ -19,7 +19,7 @@ interface YearCacheDAO {
      * @param year The [YearCacheEntity] object to be saved.
      */
     @Insert(onConflict = OnConflictStrategy.NONE)
-    fun saveYear(year : YearCacheEntity)
+    suspend fun saveYear(year : YearCacheEntity)
 
     /**
      * Retrieves all season year entities from the database.
@@ -27,6 +27,6 @@ interface YearCacheDAO {
      * @return List of [YearCacheEntity] objects.
      */
     @Query("SELECT * FROM season_year_table")
-    fun getAllYears() : List<YearCacheEntity>
+    suspend fun getAllYears() : List<YearCacheEntity>
 
 }
