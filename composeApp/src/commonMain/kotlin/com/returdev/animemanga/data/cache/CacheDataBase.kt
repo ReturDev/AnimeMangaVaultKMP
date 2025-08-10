@@ -5,13 +5,15 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import com.returdev.animemanga.data.cache.dao.CacheMetadataDAO
-import com.returdev.animemanga.data.cache.dao.GenreCacheDAO
 import com.returdev.animemanga.data.cache.dao.SeasonCacheDAO
 import com.returdev.animemanga.data.cache.dao.YearCacheDAO
-import com.returdev.animemanga.data.cache.model.entity.GenreCacheEntity
+import com.returdev.animemanga.data.cache.dao.genre.AnimeGenreCacheDAO
+import com.returdev.animemanga.data.cache.dao.genre.MangaGenreCacheDAO
 import com.returdev.animemanga.data.cache.model.entity.MetadataEntity
 import com.returdev.animemanga.data.cache.model.entity.SeasonCacheEntity
 import com.returdev.animemanga.data.cache.model.entity.YearCacheEntity
+import com.returdev.animemanga.data.cache.model.entity.genre.AnimeGenreCacheEntity
+import com.returdev.animemanga.data.cache.model.entity.genre.MangaGenreCacheEntity
 
 /**
  * Constant representing the name of the local cache database file.
@@ -33,13 +35,14 @@ expect object CacheCTor : RoomDatabaseConstructor<CacheDataBase>
  * @property yearCacheDao Provides access to year cache operations.
  */
 @Database(
-    entities = [MetadataEntity::class, GenreCacheEntity::class, SeasonCacheEntity::class, YearCacheEntity::class],
-    version = 1,
+    entities = [MetadataEntity::class, AnimeGenreCacheEntity::class, MangaGenreCacheEntity::class, SeasonCacheEntity::class, YearCacheEntity::class],
+    version = 1
 )
 @ConstructedBy(CacheCTor::class)
 abstract class CacheDataBase : RoomDatabase() {
 
-    abstract fun genreCacheDao(): GenreCacheDAO
+    abstract fun animeGenreCacheDao(): AnimeGenreCacheDAO
+    abstract fun mangaGenreCacheDao(): MangaGenreCacheDAO
     abstract fun cacheMetadataDao() : CacheMetadataDAO
     abstract fun seasonsCacheDao(): SeasonCacheDAO
     abstract fun yearCacheDao(): YearCacheDAO
