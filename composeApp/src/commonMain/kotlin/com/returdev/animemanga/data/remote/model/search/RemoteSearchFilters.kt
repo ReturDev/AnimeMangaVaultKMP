@@ -16,7 +16,7 @@ sealed class RemoteSearchFilters {
     abstract val genreIds: String?
     abstract val orderBy: String?
     abstract val sort: String
-    abstract val score : String
+    abstract val score : String?
     abstract val publisherIds: String?
     abstract val startDate: String?
     abstract val endDate: String?
@@ -32,7 +32,7 @@ sealed class RemoteSearchFilters {
         override val genreIds: String?,
         override val orderBy: String?,
         override val sort: String,
-        override val score : String,
+        override val score : String?,
         override val publisherIds: String?,
         override val startDate: String?,
         override val endDate: String?,
@@ -48,7 +48,7 @@ sealed class RemoteSearchFilters {
         override val genreIds: String?,
         override val orderBy: String?,
         override val sort: String,
-        override val score : String,
+        override val score : String?,
         override val publisherIds: String?,
         override val startDate: String?,
         override val endDate: String?
