@@ -3,7 +3,7 @@ package com.returdev.animemanga.data.cache.datasource.genre
 import com.returdev.animemanga.data.cache.dao.genre.MangaGenreCacheDAO
 import com.returdev.animemanga.data.cache.model.entity.genre.MangaGenreCacheEntity
 
-class MangaCacheDataSource(
+class MangaGenreCacheDataSource(
     private val mangaGenreCacheDAO : MangaGenreCacheDAO
 ) : GenreCacheDataSource<MangaGenreCacheEntity>() {
 
