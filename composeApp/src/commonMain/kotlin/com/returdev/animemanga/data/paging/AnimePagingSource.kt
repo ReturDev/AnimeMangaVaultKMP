@@ -126,13 +126,15 @@ class AnimePagingSource(
      *
      * @param isAdultEntriesDisabled Whether to exclude adult (R-18) content.
      * @param type Optional anime type filter (e.g., TV, Movie).
+     * @param itemsLimit Optional maximum number of items to load.
      * @return A [PagingSource] emitting [AnimeBasicModel] items from upcoming seasons.
      */
     fun getAnimeSeasonUpcoming(
         isAdultEntriesDisabled : Boolean,
-        type : String? = null,
+        type : String?,
+        itemsLimit : Int? = null,
     ) : PagingSource<Int, AnimeBasicModel> {
-        return createVisualMediaPagingSource { page ->
+        return createVisualMediaPagingSource(itemsLimit = itemsLimit) { page ->
             animeRemoteRepository.getAnimeSeasonUpcoming(
                 page = page,
                 isAdultEntriesDisabled = isAdultEntriesDisabled,
