@@ -36,7 +36,6 @@ object RepositoryUtil {
     ): DomainResult<Unit> {
 
         var result: DomainResult<Unit> = DomainResult.Success(
-            hasNextPage = false,
             data = Unit
         )
 
