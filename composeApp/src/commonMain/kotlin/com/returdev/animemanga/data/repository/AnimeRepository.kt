@@ -11,17 +11,14 @@ import com.returdev.animemanga.data.cache.model.extension.toAnimeGenreCacheList
 import com.returdev.animemanga.data.cache.model.extension.toCacheEntityList
 import com.returdev.animemanga.data.model.extension.toLowerCase
 import com.returdev.animemanga.data.paging.AnimePagingSource
-import com.returdev.animemanga.data.remote.model.core.extension.toDomainErrorType
 import com.returdev.animemanga.data.remote.model.core.extension.toDomainModel
-import com.returdev.animemanga.data.remote.model.core.extension.toDomainModelList
-import com.returdev.animemanga.data.remote.model.core.wrapper.response.ApiResponse
+import com.returdev.animemanga.data.remote.model.core.extension.toPagedDomainModel
 import com.returdev.animemanga.data.remote.repository.AnimeRemoteRepository
 import com.returdev.animemanga.data.remote.service.ApiService
 import com.returdev.animemanga.data.repository.core.RepositoryUtil
 import com.returdev.animemanga.domain.model.anime.AnimeBasicModel
 import com.returdev.animemanga.domain.model.anime.AnimeModel
 import com.returdev.animemanga.domain.model.core.Season
-import com.returdev.animemanga.domain.model.core.result.DomainErrorType
 import com.returdev.animemanga.domain.model.core.result.DomainResult
 import com.returdev.animemanga.domain.model.core.search.SearchFilters
 import com.returdev.animemanga.domain.model.core.search.anime.AnimeTypeFilters
@@ -69,7 +66,7 @@ class AnimeRepository(
      * @return A [DomainResult] containing an [AnimeModel].
      */
     suspend fun getAnimeById(id : Int) : DomainResult<AnimeModel> {
-        return animeRepository.getAnimeById(id).toDomainModel { it.toDomainModel() }
+        return animeRepository.getAnimeById(id).toDomainModel { it.toPagedDomainModel() }
     }
 
     /**
@@ -235,7 +232,7 @@ class AnimeRepository(
         shouldUpdate = metadataDataSource.shouldUpdateSeasons(MONTHS_FOR_SEASON_UPDATE),
         apiResponse = animeRepository.getAnimeSeasonList()
     ) { content ->
-        val seasons = content.toCacheEntityList()
+        val seasons = content.data.toCacheEntityList()
         val updated = seasonDataSource.updateSeasonsCache(seasons)
         Logger.i("AnimeRepository", "Seasons updated: $updated")
         metadataDataSource.updateSeasonsLastModifiedDate()
@@ -251,7 +248,7 @@ class AnimeRepository(
         shouldUpdate = metadataDataSource.shouldUpdateAnimeGenres(MONTHS_FOR_GENRES_UPDATE),
         apiResponse = animeRepository.getAnimeGenres()
     ) { content ->
-        val genres = content.toAnimeGenreCacheList()
+        val genres = content.data.toAnimeGenreCacheList()
         val updated = genreDataSource.syncGenres(genres)
         Logger.i("AnimeRepository", "Anime genres updated: $updated")
         metadataDataSource.updateAnimeGenresLastModifiedDate()

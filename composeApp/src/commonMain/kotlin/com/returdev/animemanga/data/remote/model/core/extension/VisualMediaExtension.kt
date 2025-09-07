@@ -19,9 +19,9 @@ import com.returdev.animemanga.domain.model.manga.MangaModel
  * @receiver The extended anime response from the API.
  * @return A fully mapped [AnimeModel].
  */
-fun AnimeExtendedResponse.toDomainModel() = AnimeModel(
+fun AnimeExtendedResponse.toPagedDomainModel() = AnimeModel(
     basicInfo = this.getBasicInfo(),
-    trailer = trailer.toDomainModel(),
+    trailer = trailer.toPagedDomainModel(),
     extraTitles = titles.toTitleModelList(),
     numberOfScorers = numberOfScorers,
     rank = rank,
@@ -32,7 +32,7 @@ fun AnimeExtendedResponse.toDomainModel() = AnimeModel(
     source = source,
     episodes = episodes,
     airing = airing,
-    aired = aired.toDomainModel(),
+    aired = aired.toPagedDomainModel(),
     season = season
 )
 
@@ -44,7 +44,7 @@ fun AnimeExtendedResponse.toDomainModel() = AnimeModel(
  * @receiver The reduced anime response from the API.
  * @return A [AnimeBasicModel] containing ID, title, images, type, and score.
  */
-fun AnimeReducedResponse.toDomainModel() = AnimeBasicModel(
+fun AnimeReducedResponse.toPagedDomainModel() = AnimeBasicModel(
     id = id,
     images = images.toDomainModelList(),
     title = title,
@@ -74,7 +74,7 @@ fun AnimeExtendedResponse.getBasicInfo() = AnimeBasicModel(
  * @receiver The reduced manga response from the API.
  * @return A [MangaBasicModel] containing ID, title, images, type, and score.
  */
-fun MangaReducedResponse.toDomainModel() = MangaBasicModel(
+fun MangaReducedResponse.toPagedDomainModel() = MangaBasicModel(
     id = id,
     images = images.toDomainModelList(),
     title = title,
@@ -91,7 +91,7 @@ fun MangaReducedResponse.toDomainModel() = MangaBasicModel(
  * @receiver The extended manga response from the API.
  * @return A fully mapped [MangaModel].
  */
-fun MangaExtendedResponse.toDomainModel() = MangaModel(
+fun MangaExtendedResponse.toPagedDomainModel() = MangaModel(
     basicInfo = this.getBasicInfo(),
     extraTitles = titles.toTitleModelList(),
     numberOfScorers = numberOfScorers,
@@ -103,7 +103,7 @@ fun MangaExtendedResponse.toDomainModel() = MangaModel(
     chapters = chapters,
     volumes = volumes,
     isPublishing = publishing,
-    published = published.toDomainModel()
+    published = published.toPagedDomainModel()
 )
 
 /**

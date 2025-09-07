@@ -1,7 +1,7 @@
 package com.returdev.animemanga.data.paging
 
 import androidx.paging.PagingSource
-import com.returdev.animemanga.data.remote.model.core.extension.toDomainModel
+import com.returdev.animemanga.data.remote.model.core.extension.toPagedDomainModel
 import com.returdev.animemanga.data.remote.model.core.extension.toRemoteSearchFilters
 import com.returdev.animemanga.data.remote.model.core.wrapper.data.PagedDataResponse
 import com.returdev.animemanga.data.remote.model.core.wrapper.response.ApiResponse
@@ -79,6 +79,6 @@ class MangaPagingSource(
     override fun mapResponseToDomain(
         data : ApiResponse<PagedDataResponse<MangaReducedResponse>>
     ) : DomainResult<List<MangaBasicModel>> {
-        return data.toDomainModel<MangaReducedResponse, MangaBasicModel> { it.toDomainModel() }
+        return data.toPagedDomainModel { it.toPagedDomainModel() }
     }
 }

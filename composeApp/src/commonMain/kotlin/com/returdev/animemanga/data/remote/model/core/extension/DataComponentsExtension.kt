@@ -57,7 +57,7 @@ fun List<TitleDataComponentResponse>.toTitleModelList(): List<TitleModel> {
  * @receiver The API trailer response.
  * @return A [TrailerModel] containing video URLs and image previews.
  */
-fun AnimeTrailerInfoResponse.toDomainModel() = TrailerModel(
+fun AnimeTrailerInfoResponse.toPagedDomainModel() = TrailerModel(
     videoUrl = this.videoUrl,
     embeddedVideoUrl = this.embeddedVideoUrl,
     images = this.trailerImages.toImageTypeList()
@@ -86,7 +86,7 @@ fun AnimeTrailerInfoResponse.TrailerImages.toImageTypeList(): List<ImageType> {
  * @receiver The released data component from the API.
  * @return A [ReleasedModel] with `from` and optional `to` dates.
  */
-fun ReleasedDataComponentResponse.toDomainModel(): ReleasedModel {
+fun ReleasedDataComponentResponse.toPagedDomainModel(): ReleasedModel {
     val startDate = this.date.startDate
     val endDate = this.date.endDate
 
@@ -116,7 +116,7 @@ fun ReleasedDataComponentResponse.toDomainModel(): ReleasedModel {
  * @receiver The genre component from the API.
  * @return A [GenreModel] with the same id and name.
  */
-fun GenreDataComponentResponse.toDomainModel(): GenreModel {
+fun GenreDataComponentResponse.toPagedDomainModel(): GenreModel {
     return GenreModel(
         id = this.id,
         name = this.name,
@@ -130,5 +130,5 @@ fun GenreDataComponentResponse.toDomainModel(): GenreModel {
  * @return A list of corresponding [GenreModel] objects.
  */
 fun List<GenreDataComponentResponse>.toDomainModelList(): List<GenreModel> {
-    return this.map { it.toDomainModel() }
+    return this.map { it.toPagedDomainModel() }
 }
