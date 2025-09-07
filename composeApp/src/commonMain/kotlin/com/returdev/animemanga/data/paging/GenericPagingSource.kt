@@ -2,11 +2,13 @@ package com.returdev.animemanga.data.paging
 
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
+import androidx.paging.PagingSource.LoadResult.*
 import androidx.paging.PagingState
 import com.returdev.animemanga.data.remote.model.core.wrapper.data.PagedDataResponse
 import com.returdev.animemanga.data.remote.model.core.wrapper.response.ApiResponse
 import com.returdev.animemanga.domain.model.core.result.DomainResult
 import com.returdev.animemanga.domain.model.core.result.DomainResult.Error
+import com.returdev.animemanga.domain.model.core.result.DomainResult.PagedSuccess
 import com.returdev.animemanga.domain.model.core.result.DomainResult.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -79,8 +81,11 @@ class GenericPagingSource<T, R : Any>(
         }
 
         return when (response) {
-            is Error -> LoadResult.Error(Exception(response.errorType.name))
+            is Error -> Error(Exception(response.errorType.name))
             is Success -> {
+                throw IllegalArgumentException("Use PagedSuccess for paginated data")
+            }
+            is PagedSuccess -> {
                 val totalSoFar = (page - 1) * params.loadSize + response.data.size
                 val reachedLimit = itemsLimit?.let { limit ->
                     totalSoFar >= limit
@@ -89,18 +94,18 @@ class GenericPagingSource<T, R : Any>(
                 val prevPage = if (page == INITIAL_PAGE_INDEX) null else page - 1
                 val nextPage = if (response.hasNextPage && !reachedLimit) page + 1 else null
 
-                // If item limit is reached, trim the data to the allowed size
                 val limitedData = if (reachedLimit) {
                     response.data.take(itemsLimit - (totalSoFar - response.data.size))
                 } else {
                     response.data
                 }
 
-                LoadResult.Page(
+                Page(
                     data = limitedData,
                     prevKey = prevPage,
                     nextKey = nextPage
                 )
+
             }
         }
     }
