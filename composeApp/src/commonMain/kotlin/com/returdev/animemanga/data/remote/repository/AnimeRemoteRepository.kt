@@ -37,7 +37,7 @@ class AnimeRemoteRepository(
      * @param id The unique identifier of the anime.
      * @return [ApiResponse] containing [AnimeExtendedResponse] with full anime details.
      */
-    suspend fun getAnimeById(id : Int) : ApiResponse<AnimeExtendedResponse> {
+    suspend fun getAnimeById(id : Int) : ApiResponse<DataResponse<AnimeExtendedResponse>> {
         return requestManager.executeRequest(
             typeInfo = animeExtendedTypeInfo,
             request = { apiService.getAnimeById(id.toString()) }
@@ -197,7 +197,7 @@ class AnimeRemoteRepository(
      *
      * @return [ApiResponse] containing a list of [SeasonResponse].
      */
-    suspend fun getAnimeSeasonList() : ApiResponse<List<SeasonResponse>> {
+    suspend fun getAnimeSeasonList() : ApiResponse<DataResponse<List<SeasonResponse>>> {
         return requestManager.executeRequest(
             typeInfo = typeInfo<List<SeasonResponse>>(),
             request = { apiService.getAnimeSeasonsList() }
@@ -209,7 +209,7 @@ class AnimeRemoteRepository(
      *
      * @return [ApiResponse] containing a list of [GenreDataComponentResponse].
      */
-    suspend fun getAnimeGenres() : ApiResponse<List<GenreDataComponentResponse>> {
+    suspend fun getAnimeGenres() : ApiResponse<DataResponse<List<GenreDataComponentResponse>>> {
         return requestManager.executeRequest(
             typeInfo = typeInfo<List<GenreDataComponentResponse>>(),
             request = { apiService.getAnimeGenres() }
