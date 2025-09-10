@@ -20,6 +20,7 @@ roomCommon = "2.7.2"
 androidx-sqliteBundled = "2.5.2"
 ksp = "2.2.0-2.0.2"
 pagingCommon = "3.3.0-alpha02-0.5.1"
+coil = "3.3.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -59,6 +60,10 @@ androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", 
 #Paging3
 paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingCommon" }
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingCommon" }
+
+#Coil
+coil-compose = {group = "io.coil-kt.coil3",name= "coil-compose", version.ref = "coil" }
+coil-network-ktor = {group = "io.coil-kt.coil3",name= "coil-network-ktor3", version.ref = "coil" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
