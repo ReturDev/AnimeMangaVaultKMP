@@ -76,6 +76,9 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
+            //Navigation
+            implementation(libs.navigation.compose)
+
         }
         iosMain.dependencies {
             //Ktor

@@ -21,6 +21,7 @@ androidx-sqliteBundled = "2.5.2"
 ksp = "2.2.0-2.0.2"
 pagingCommon = "3.3.0-alpha02-0.5.1"
 coil = "3.3.0"
+navigation-compose = "2.9.0-rc01"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -64,6 +65,10 @@ paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagin
 #Coil
 coil-compose = {group = "io.coil-kt.coil3",name= "coil-compose", version.ref = "coil" }
 coil-network-ktor = {group = "io.coil-kt.coil3",name= "coil-network-ktor3", version.ref = "coil" }
+
+#Navigation
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
