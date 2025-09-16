@@ -49,7 +49,7 @@ fun AnimeReducedResponse.toPagedDomainModel() = AnimeBasicModel(
     images = images.toDomainModelList(),
     title = title,
     type = type,
-    score = score
+    score = score?: 0f
 )
 
 /**
@@ -79,7 +79,7 @@ fun MangaReducedResponse.toPagedDomainModel() = MangaBasicModel(
     images = images.toDomainModelList(),
     title = title,
     type = type,
-    score = score
+    score = score?: 0f
 )
 
 /**

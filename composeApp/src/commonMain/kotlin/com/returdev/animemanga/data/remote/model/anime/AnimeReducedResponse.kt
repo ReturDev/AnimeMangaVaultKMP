@@ -19,5 +19,5 @@ data class AnimeReducedResponse(
     @SerialName("images") val images : ImageDataComponentResponse,
     @SerialName("title") val title : String,
     @SerialName("type") val type : String?,
-    @SerialName("score") val score : Float
+    @SerialName("score") val score : Float?
 )
