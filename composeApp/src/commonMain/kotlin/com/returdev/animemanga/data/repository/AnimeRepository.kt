@@ -9,13 +9,15 @@ import com.returdev.animemanga.data.cache.datasource.SeasonCacheDataSource
 import com.returdev.animemanga.data.cache.datasource.genre.AnimeGenreCacheDataSource
 import com.returdev.animemanga.data.cache.model.extension.toAnimeGenreCacheList
 import com.returdev.animemanga.data.cache.model.extension.toCacheEntityList
-import com.returdev.animemanga.data.cache.model.extension.toDomain
+import com.returdev.animemanga.data.cache.model.extension.toDomainListAnime
 import com.returdev.animemanga.data.model.extension.toLowerCase
 import com.returdev.animemanga.data.paging.AnimePagingSource
 import com.returdev.animemanga.data.remote.model.core.extension.toDomainModel
 import com.returdev.animemanga.data.remote.model.core.extension.toPagedDomainModel
 import com.returdev.animemanga.data.remote.repository.AnimeRemoteRepository
 import com.returdev.animemanga.data.remote.service.ApiService
+import com.returdev.animemanga.data.repository.AnimeRepository.Companion.MONTHS_FOR_GENRES_UPDATE
+import com.returdev.animemanga.data.repository.AnimeRepository.Companion.MONTHS_FOR_SEASON_UPDATE
 import com.returdev.animemanga.data.repository.core.RepositoryUtil
 import com.returdev.animemanga.domain.model.anime.AnimeBasicModel
 import com.returdev.animemanga.domain.model.anime.AnimeModel
@@ -233,7 +235,7 @@ class AnimeRepository(
      *
      * @return A domain representation of the list of anime genres.
      */
-    suspend fun getAnimeGenres() = genreDataSource.getGenres().toDomain()
+    suspend fun getAnimeGenres() = genreDataSource.getGenres().toDomainListAnime()
 
     /**
      * Updates the locally cached list of anime seasons if the last update

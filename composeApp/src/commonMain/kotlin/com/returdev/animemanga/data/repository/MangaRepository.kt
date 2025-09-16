@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.returdev.animemanga.core.Logger
 import com.returdev.animemanga.data.cache.datasource.CacheMetadataDataSource
 import com.returdev.animemanga.data.cache.datasource.genre.MangaGenreCacheDataSource
+import com.returdev.animemanga.data.cache.model.extension.toDomainListManga
 import com.returdev.animemanga.data.cache.model.extension.toMangaGenreCacheList
 import com.returdev.animemanga.data.model.extension.toLowerCase
 import com.returdev.animemanga.data.paging.MangaPagingSource
@@ -141,5 +142,5 @@ class MangaRepository(
      *
      * @return A domain-level list of genres (if available).
      */
-    suspend fun getMangaGenres() = genreDataSource.getGenres()
+    suspend fun getMangaGenres() = genreDataSource.getGenres().toDomainListManga()
 }

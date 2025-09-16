@@ -35,7 +35,7 @@ fun List<GenreDataComponentResponse>.toMangaGenreCacheList() : List<MangaGenreCa
     }
 }
 
-fun List<MangaGenreCacheEntity>.toDomain() : List<GenreModel> {
+fun List<MangaGenreCacheEntity>.toDomainListManga() : List<GenreModel> {
     return this.map { genre ->
         GenreModel(
             id = genre.id,
@@ -44,7 +44,7 @@ fun List<MangaGenreCacheEntity>.toDomain() : List<GenreModel> {
     }
 }
 
-fun List<AnimeGenreCacheEntity>.toDomain() : List<GenreModel> {
+fun List<AnimeGenreCacheEntity>.toDomainListAnime() : List<GenreModel> {
     return this.map { genre ->
         GenreModel(
             id = genre.id,
