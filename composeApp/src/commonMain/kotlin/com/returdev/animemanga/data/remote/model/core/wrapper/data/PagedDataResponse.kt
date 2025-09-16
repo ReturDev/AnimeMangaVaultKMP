@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class PagedDataResponse<T>(
-    @SerialName("data") val data : DataResponse<List<T>>,
+    @SerialName("data") val data : List<T>,
     @SerialName("pagination") val pagination : PaginationResponse
 ) {
 

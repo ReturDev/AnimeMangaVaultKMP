@@ -26,7 +26,7 @@ fun <T, R> ApiResponse<PagedDataResponse<T>>.toPagedDomainModel(
 ) : DomainResult<List<R>> = when (this) {
     is ApiResponse.Success -> DomainResult.PagedSuccess(
         hasNextPage = content.pagination.hasNextPage,
-        data = content.data.data.map(mapContent) // transforms each item into the domain model
+        data = content.data.map(mapContent) // transforms each item into the domain model
     )
 
     is ApiResponse.Failure -> DomainResult.Error(errorStatus.toDomainErrorType())
