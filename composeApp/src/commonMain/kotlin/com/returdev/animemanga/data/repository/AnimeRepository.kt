@@ -9,6 +9,7 @@ import com.returdev.animemanga.data.cache.datasource.SeasonCacheDataSource
 import com.returdev.animemanga.data.cache.datasource.genre.AnimeGenreCacheDataSource
 import com.returdev.animemanga.data.cache.model.extension.toAnimeGenreCacheList
 import com.returdev.animemanga.data.cache.model.extension.toCacheEntityList
+import com.returdev.animemanga.data.cache.model.extension.toDomain
 import com.returdev.animemanga.data.model.extension.toLowerCase
 import com.returdev.animemanga.data.paging.AnimePagingSource
 import com.returdev.animemanga.data.remote.model.core.extension.toDomainModel
@@ -81,7 +82,7 @@ class AnimeRepository(
         filters : SearchFilters.AnimeFilters,
     ) : Flow<PagingData<AnimeBasicModel>> {
 
-        val isUserAdult = metadataDataSource.isUserAdult()
+        val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
             config = PagingConfig(
@@ -92,7 +93,7 @@ class AnimeRepository(
                 animePagingSource.getAnimeSearch(
                     query = query,
                     filters = filters,
-                    isAdultEntriesDisabled = isUserAdult
+                    isAdultEntriesDisabled = isAdultEntriesDisabled
                 )
             }
         ).flow
@@ -108,7 +109,8 @@ class AnimeRepository(
         type : AnimeTypeFilters?,
         itemsLimit : Int? = null
     ) : Flow<PagingData<AnimeBasicModel>> {
-        val isUserAdult = metadataDataSource.isUserAdult()
+
+        val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
             config = PagingConfig(
@@ -118,7 +120,7 @@ class AnimeRepository(
             pagingSourceFactory = {
                 animePagingSource.getTopAnime(
                     type = type?.toLowerCase(),
-                    isAdultEntriesDisabled = isUserAdult,
+                    isAdultEntriesDisabled = isAdultEntriesDisabled,
                     itemsLimit = itemsLimit
                 )
             }
@@ -135,7 +137,8 @@ class AnimeRepository(
         type : AnimeTypeFilters?,
         itemsLimit : Int? = null
     ) : Flow<PagingData<AnimeBasicModel>> {
-        val isUserAdult = metadataDataSource.isUserAdult()
+
+        val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
             config = PagingConfig(
@@ -145,7 +148,7 @@ class AnimeRepository(
             pagingSourceFactory = {
                 animePagingSource.getAnimeCurrentSeason(
                     type = type?.toLowerCase(),
-                    isAdultEntriesDisabled = isUserAdult,
+                    isAdultEntriesDisabled = isAdultEntriesDisabled,
                     itemsLimit = itemsLimit
                 )
             }
@@ -164,7 +167,8 @@ class AnimeRepository(
         season : Season,
         type : AnimeTypeFilters?
     ) : Flow<PagingData<AnimeBasicModel>> {
-        val isUserAdult = metadataDataSource.isUserAdult()
+
+        val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
             config = PagingConfig(
@@ -176,7 +180,7 @@ class AnimeRepository(
                     year = year,
                     season = season.toLowerCase()!!,
                     type = type?.toLowerCase(),
-                    isAdultEntriesDisabled = isUserAdult
+                    isAdultEntriesDisabled = isAdultEntriesDisabled
                 )
             }
         ).flow
@@ -192,7 +196,8 @@ class AnimeRepository(
         type : AnimeTypeFilters?,
         itemsLimit : Int? = null
     ) : Flow<PagingData<AnimeBasicModel>> {
-        val isUserAdult = metadataDataSource.isUserAdult()
+
+        val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
             config = PagingConfig(
@@ -202,7 +207,7 @@ class AnimeRepository(
             pagingSourceFactory = {
                 animePagingSource.getAnimeSeasonUpcoming(
                     type = type?.toLowerCase(),
-                    isAdultEntriesDisabled = isUserAdult,
+                    isAdultEntriesDisabled = isAdultEntriesDisabled,
                     itemsLimit = itemsLimit
                 )
             }
@@ -221,6 +226,14 @@ class AnimeRepository(
     suspend fun getAnimeSeasonsByYear(year : Int) : List<Season> {
         return seasonDataSource.getSeasonNamesByYear(year).map { Season.fromString(it)!! }
     }
+
+    /**
+     * Retrieves the list of anime genres from the local data source
+     * and converts it into a domain-level model.
+     *
+     * @return A domain representation of the list of anime genres.
+     */
+    suspend fun getAnimeGenres() = genreDataSource.getGenres().toDomain()
 
     /**
      * Updates the locally cached list of anime seasons if the last update
@@ -253,6 +266,7 @@ class AnimeRepository(
         Logger.i("AnimeRepository", "Anime genres updated: $updated")
         metadataDataSource.updateAnimeGenresLastModifiedDate()
     }
+
 
 }
 
