@@ -6,17 +6,12 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.unit.IntSize
 
 /**
  * Adds a shimmer effect to any [Modifier].
@@ -34,7 +29,6 @@ fun Modifier.shimmerBrush(
     transition: InfiniteTransition,
     brushColors: List<Color> = defaultShimmerColors
 ) = composed {
-    var size by remember { mutableStateOf(IntSize.Zero) }
 
     val progress by transition.animateFloat(
         initialValue = 0f,
@@ -47,10 +41,10 @@ fun Modifier.shimmerBrush(
         )
     )
 
-    this.onSizeChanged { size = it }
-        .drawWithCache {
-            val width = size.width.toFloat().coerceAtLeast(1f)
-            val height = size.height.toFloat().coerceAtLeast(1f)
+    this.drawWithCache {
+
+            val width = size.width
+            val height = size.height
 
             val startX = -width + ((width * 2f) * progress)
             val endX = 0f + ((width * 2f) * progress)
