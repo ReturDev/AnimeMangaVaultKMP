@@ -31,6 +31,7 @@ import animemangavaultkmp.composeapp.generated.resources.Res
 import animemangavaultkmp.composeapp.generated.resources.ic_outline_star
 import animemangavaultkmp.composeapp.generated.resources.rate_icon_content_description
 import coil3.compose.AsyncImage
+import com.returdev.animemanga.core.format
 import com.returdev.animemanga.ui.theme.OnScrimColor
 import com.returdev.animemanga.ui.theme.ScrimColor
 import org.jetbrains.compose.resources.painterResource
@@ -55,7 +56,7 @@ fun BasicVisualMediaItem(
     modifier : Modifier = Modifier,
     imageUrl : String,
     title : String,
-    rate : String,
+    rate : Float,
     type : String,
     onClick : () -> Unit
 ) {
@@ -75,7 +76,7 @@ fun BasicVisualMediaItem(
                     contentDescription = stringResource(Res.string.rate_icon_content_description)
                 )
                 Text(
-                    text = rate,
+                    text = "%.2f".format(rate),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold
                 )
