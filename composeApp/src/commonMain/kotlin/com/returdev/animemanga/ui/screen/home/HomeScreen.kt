@@ -4,13 +4,11 @@ import androidx.compose.animation.core.InfiniteTransition
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -32,9 +30,8 @@ import animemangavaultkmp.composeapp.generated.resources.retry_button_text
 import animemangavaultkmp.composeapp.generated.resources.show_more_button_text
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
-import com.returdev.animemanga.core.format
-import com.returdev.animemanga.ui.core.composable.item.basic.BasicVisualMediaItem
-import com.returdev.animemanga.ui.core.composable.item.basic.loading.BasicVisualMediaLoadingRow
+import com.returdev.animemanga.ui.core.composable.list.row.VisualMediaLoadingRow
+import com.returdev.animemanga.ui.core.composable.list.row.VisualMediaRow
 import com.returdev.animemanga.ui.model.basic.VisualMediaBasicUi
 import com.returdev.animemanga.ui.model.core.MediaCategory
 import com.returdev.animemanga.ui.screen.showmore.model.ShowMoreSection
@@ -43,7 +40,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 private val sectionContentHeight = 300.dp
-private val spaceBetweenItems = 4.dp
 
 /**
  * Main Home screen displaying top anime, current season anime, and top manga.
@@ -128,13 +124,16 @@ private fun <T : VisualMediaBasicUi> MediaSection(
 
         when {
             items.itemCount != 0 -> {
-                MediaListRow(items = items, onItemClick = onItemClick)
+                VisualMediaRow(
+                    modifier = Modifier.height(sectionContentHeight),
+                    items = items,
+                    onItemClick = onItemClick
+                )
             }
             items.loadState.refresh is LoadState.Loading && items.itemCount == 0 -> {
-                BasicVisualMediaLoadingRow(
-                    modifier = Modifier.fillMaxWidth().height(sectionContentHeight),
-                    transition = infiniteTransition,
-                    spaceBetweenItems = spaceBetweenItems
+                VisualMediaLoadingRow(
+                    modifier = Modifier.height(sectionContentHeight),
+                    transition = infiniteTransition
                 )
             }
             items.loadState.refresh is LoadState.Error -> {
@@ -147,34 +146,7 @@ private fun <T : VisualMediaBasicUi> MediaSection(
     }
 }
 
-/**
- * Horizontally scrolling row that displays a list of media items.
- */
-@Composable
-private fun <T : VisualMediaBasicUi> MediaListRow(
-    modifier : Modifier = Modifier,
-    items : LazyPagingItems<T>,
-    onItemClick : (Int) -> Unit
-) {
-    LazyRow(
-        modifier = modifier.fillMaxWidth().height(sectionContentHeight),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(spaceBetweenItems),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)
-    ) {
-        items(count = items.itemCount, key = { items[it]?.id ?: it }) { index ->
-            items[index]?.let { item ->
-                BasicVisualMediaItem(
-                    imageUrl = item.image.url,
-                    title = item.title,
-                    rate = "%.2f".format(item.score),
-                    type = item.type.typeName,
-                    onClick = { onItemClick(item.id) }
-                )
-            }
-        }
-    }
-}
+
 
 /**
  * Section header with title and optional "Show More" button.
