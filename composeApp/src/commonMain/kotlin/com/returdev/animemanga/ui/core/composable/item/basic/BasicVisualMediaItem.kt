@@ -117,14 +117,14 @@ fun BasicVisualMediaItem(
 ) {
     Column(
         modifier = modifier
-            .width(VisualMediaItemDefaults.ItemWidth)
-            .clip(VisualMediaItemDefaults.ItemShape)
+            .width(VisualMediaItemDefaults.itemWidth)
+            .clip(VisualMediaItemDefaults.itemShape)
             .clickable(onClick = onClick)
             .padding(6.dp),
     ) {
 
         ItemImage(
-            modifier = Modifier.clip(VisualMediaItemDefaults.ItemShape),
+            modifier = Modifier.clip(VisualMediaItemDefaults.itemShape),
             imageUrl = imageUrl,
             scrimContent = scrimContent
         )
@@ -175,7 +175,7 @@ private fun ImageScrim(
     Box(
         modifier = modifier
             .padding(8.dp)
-            .clip(VisualMediaItemDefaults.ScrimShape)
+            .clip(VisualMediaItemDefaults.scrimShape)
             .background(color = ScrimColor),
     ){
         // Change local content color for proper contrast over scrim
@@ -201,7 +201,7 @@ private fun Image(
 ) {
     AsyncImage(
         modifier = modifier.fillMaxWidth()
-            .aspectRatio(VisualMediaItemDefaults.HeightAspectRatio),
+            .aspectRatio(VisualMediaItemDefaults.IMAGE_HEIGHT_ASPECT_RATIO),
         model = imageUrl,
         contentDescription = null,
         contentScale = ContentScale.Crop

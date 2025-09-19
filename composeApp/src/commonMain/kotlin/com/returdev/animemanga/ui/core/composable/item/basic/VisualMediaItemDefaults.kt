@@ -12,22 +12,23 @@ import androidx.compose.ui.unit.dp
 object VisualMediaItemDefaults {
 
     /**
-     * Default width of a media item card.
-     */
-    val ItemWidth = 162.dp
-
-    /**
      * Default aspect ratio of media item images.
      */
-    const val HeightAspectRatio = 0.67f
+
+    const val IMAGE_HEIGHT_ASPECT_RATIO = 0.67f
+
+    /**
+     * Default width of a media item card.
+     */
+    val itemWidth = 162.dp
 
     /**
      * Default rounded corner shape for media item cards.
      */
-    val ItemShape = RoundedCornerShape(8.dp)
+    val itemShape = RoundedCornerShape(8.dp)
 
     /**
      * Default rounded shape for scrim overlay.
      */
-    val ScrimShape = RoundedCornerShape(50)
+    val scrimShape = RoundedCornerShape(50)
 }

@@ -2,6 +2,7 @@ package com.returdev.animemanga.ui.core.composable.list.row
 
 import androidx.compose.animation.core.InfiniteTransition
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
@@ -29,7 +30,10 @@ fun VisualMediaLoadingRow(
     ) {
 
         items(count = Int.MAX_VALUE) {
-            BasicVisualMediaPlaceholder(transition = transition)
+            BasicVisualMediaPlaceholder(
+                modifier = Modifier.fillMaxHeight(),
+                transition = transition
+            )
         }
 
     }
