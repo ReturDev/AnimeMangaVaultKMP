@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import app.cash.paging.PagingSource
 import com.returdev.animemanga.data.library.model.entity.LibraryAnimeEntity
+import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalDate
 
 /**
@@ -37,12 +38,12 @@ interface LibraryAnimeDAO {
                 "LIMIT :limit " +
                 "OFFSET :offset "
     )
-    suspend fun getAnimesByStatus(
+    fun getAnimesByStatus(
         status: String,
         orderBy: Int,
         limit: Int,
         offset: Int
-    ): PagingSource<Int, LibraryAnimeEntity>
+    ): Flow<List<LibraryAnimeEntity>>
 
     /**
      * Same as [getAnimesByStatus], but sorts in **descending** order.
@@ -66,12 +67,12 @@ interface LibraryAnimeDAO {
                 "LIMIT :limit " +
                 "OFFSET :offset "
     )
-    suspend fun getAnimesByStatusDesc(
+    fun getAnimesByStatusDesc(
         status: String,
         orderBy: Int,
         limit: Int,
         offset: Int
-    ): PagingSource<Int, LibraryAnimeEntity>
+    ): Flow<List<LibraryAnimeEntity>>
 
     /**
      * Retrieves the status of a specific anime by its ID.
