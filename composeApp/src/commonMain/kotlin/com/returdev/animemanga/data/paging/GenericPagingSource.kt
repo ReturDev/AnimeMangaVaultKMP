@@ -6,6 +6,7 @@ import androidx.paging.PagingSource.LoadResult.*
 import androidx.paging.PagingState
 import com.returdev.animemanga.data.remote.model.core.wrapper.data.PagedDataResponse
 import com.returdev.animemanga.data.remote.model.core.wrapper.response.ApiResponse
+import com.returdev.animemanga.data.remote.service.ApiService
 import com.returdev.animemanga.domain.model.core.result.DomainResult
 import com.returdev.animemanga.domain.model.core.result.DomainResult.Error
 import com.returdev.animemanga.domain.model.core.result.DomainResult.PagedSuccess
@@ -40,7 +41,7 @@ class GenericPagingSource<T, R : Any>(
         private const val INITIAL_PAGE_INDEX = 1
 
         /** Default page size used in pagination. */
-        const val PAGE_SIZE = 25
+        const val PAGE_SIZE = ApiService.MAX_REQUEST_LIMIT
 
         /** Number of items ahead of the current viewport to load. */
         const val PREFETCH_DISTANCE = 5
