@@ -1,4 +1,4 @@
-package github.returdev.animemangavault.core.model.core.filters.common
+package com.returdev.animemanga.domain.model.core.search.common
 
 /**
  * Enum class representing the possible sort directions for search results.

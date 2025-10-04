@@ -4,7 +4,7 @@ import com.returdev.animemanga.data.model.extension.toLowerCase
 import com.returdev.animemanga.data.remote.model.search.RemoteSearchFilters
 import com.returdev.animemanga.domain.model.core.search.SearchFilters
 import com.returdev.animemanga.domain.model.core.search.anime.AnimeRatingFilters
-import github.returdev.animemangavault.core.model.core.filters.common.SortDirection
+import com.returdev.animemanga.domain.model.core.search.common.SortDirection
 
 /**
  * Converts domain-level [SearchFilters.AnimeFilters] into

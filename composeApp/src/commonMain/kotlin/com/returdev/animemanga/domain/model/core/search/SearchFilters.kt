@@ -4,7 +4,7 @@ import com.returdev.animemanga.domain.model.core.search.anime.AnimeOrderByFilter
 import com.returdev.animemanga.domain.model.core.search.anime.AnimeRatingFilters
 import com.returdev.animemanga.domain.model.core.search.anime.AnimeStatusFilters
 import com.returdev.animemanga.domain.model.core.search.anime.AnimeTypeFilters
-import github.returdev.animemangavault.core.model.core.filters.common.SortDirection
+import com.returdev.animemanga.domain.model.core.search.common.SortDirection
 import com.returdev.animemanga.domain.model.core.search.manga.MangaOrderByFilters
 import com.returdev.animemanga.domain.model.core.search.manga.MangaStatusFilters
 import com.returdev.animemanga.domain.model.core.search.manga.MangaTypeFilters
