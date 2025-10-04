@@ -9,6 +9,7 @@ import com.returdev.animemanga.data.cache.datasource.genre.MangaGenreCacheDataSo
 import com.returdev.animemanga.data.cache.model.extension.toDomainListManga
 import com.returdev.animemanga.data.cache.model.extension.toMangaGenreCacheList
 import com.returdev.animemanga.data.model.extension.toLowerCase
+import com.returdev.animemanga.data.paging.GenericPagingSource
 import com.returdev.animemanga.data.paging.MangaPagingSource
 import com.returdev.animemanga.data.remote.model.core.extension.toDomainModel
 import com.returdev.animemanga.data.remote.model.core.extension.toPagedDomainModel
@@ -41,15 +42,6 @@ class MangaRepository(
 ) {
 
     companion object {
-        /** Number of items per page when fetching paginated manga data. */
-        const val PAGE_SIZE = ApiService.MAX_REQUEST_LIMIT
-
-        /** Number of items to prefetch ahead of the current page when paginating. */
-        const val PREFETCH_ITEMS = 5
-
-        /** Interval (in months) before cached season data is considered stale. */
-        private const val MONTHS_FOR_SEASON_UPDATE = 1
-
         /** Interval (in months) before cached genre data is considered stale. */
         private const val MONTHS_FOR_GENRES_UPDATE = 2
     }
@@ -79,10 +71,7 @@ class MangaRepository(
         val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PREFETCH_ITEMS
-            ),
+            config = GenericPagingSource.getPagingConfig(),
             pagingSourceFactory = {
                 mangaPagingSource.getMangaSearch(
                     query = query,
@@ -108,10 +97,7 @@ class MangaRepository(
         val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PREFETCH_ITEMS
-            ),
+            config = GenericPagingSource.getPagingConfig(),
             pagingSourceFactory = {
                 mangaPagingSource.getTopManga(
                     type = type?.toLowerCase(),

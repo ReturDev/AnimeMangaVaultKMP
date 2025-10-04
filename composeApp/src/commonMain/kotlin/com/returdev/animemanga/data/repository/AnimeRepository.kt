@@ -12,6 +12,7 @@ import com.returdev.animemanga.data.cache.model.extension.toCacheEntityList
 import com.returdev.animemanga.data.cache.model.extension.toDomainListAnime
 import com.returdev.animemanga.data.model.extension.toLowerCase
 import com.returdev.animemanga.data.paging.AnimePagingSource
+import com.returdev.animemanga.data.paging.GenericPagingSource
 import com.returdev.animemanga.data.remote.model.core.extension.toDomainModel
 import com.returdev.animemanga.data.remote.model.core.extension.toPagedDomainModel
 import com.returdev.animemanga.data.remote.repository.AnimeRemoteRepository
@@ -49,12 +50,6 @@ class AnimeRepository(
 ) {
 
     companion object {
-        /** Number of items per page when loading anime. */
-        const val PAGE_SIZE = ApiService.MAX_REQUEST_LIMIT
-
-        /** Number of items to prefetch ahead of the current page. */
-        const val PREFETCH_ITEMS = 5
-
         /** Time interval (in months) before cached season data should be refreshed. */
         private const val MONTHS_FOR_SEASON_UPDATE = 1
 
@@ -87,10 +82,7 @@ class AnimeRepository(
         val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PREFETCH_ITEMS
-            ),
+            config = GenericPagingSource.getPagingConfig(),
             pagingSourceFactory = {
                 animePagingSource.getAnimeSearch(
                     query = query,
@@ -115,10 +107,7 @@ class AnimeRepository(
         val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PREFETCH_ITEMS
-            ),
+            config = GenericPagingSource.getPagingConfig(),
             pagingSourceFactory = {
                 animePagingSource.getTopAnime(
                     type = type?.toLowerCase(),
@@ -143,10 +132,7 @@ class AnimeRepository(
         val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PREFETCH_ITEMS
-            ),
+            config = GenericPagingSource.getPagingConfig(),
             pagingSourceFactory = {
                 animePagingSource.getAnimeCurrentSeason(
                     type = type?.toLowerCase(),
@@ -173,10 +159,7 @@ class AnimeRepository(
         val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PREFETCH_ITEMS
-            ),
+            config = GenericPagingSource.getPagingConfig(),
             pagingSourceFactory = {
                 animePagingSource.getAnimeSeason(
                     year = year,
@@ -202,10 +185,7 @@ class AnimeRepository(
         val isAdultEntriesDisabled = !metadataDataSource.isUserAdult()
 
         return Pager(
-            config = PagingConfig(
-                pageSize = PAGE_SIZE,
-                prefetchDistance = PREFETCH_ITEMS
-            ),
+            config = GenericPagingSource.getPagingConfig(),
             pagingSourceFactory = {
                 animePagingSource.getAnimeSeasonUpcoming(
                     type = type?.toLowerCase(),
