@@ -75,6 +75,17 @@ interface LibraryAnimeDAO {
     ): Flow<List<LibraryAnimeEntity>>
 
     /**
+     * Retrieves the total number of anime entries in the library
+     * that match a specific user-defined status (e.g., "watching", "completed").
+     *
+     * @param status The library status used to filter anime entries.
+     * @return The total count of anime items with the given status.
+     */
+    @Query("SELECT COUNT(id) FROM library_anime WHERE status = :status")
+    suspend fun getAnimesCountByStatus(status: String): Int
+
+
+    /**
      * Retrieves the status of a specific anime by its ID.
      *
      * @param id The unique identifier of the anime.
