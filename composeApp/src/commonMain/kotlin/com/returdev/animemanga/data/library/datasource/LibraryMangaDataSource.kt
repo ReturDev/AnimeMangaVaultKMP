@@ -59,6 +59,17 @@ class LibraryMangaDataSource(
     }
 
     /**
+     * Returns the total number of manga entries in the library for a specific status.
+     *
+     * @param status The library status (e.g., Watching, Completed).
+     * @return The total count of manga with the given status.
+     */
+    suspend fun getMangasCountByStatus(status : UserLibraryStatusModel) : Int {
+        return mangaDAO.getMangasCountByStatus(status.name)
+    }
+
+
+    /**
      * Retrieves the current library status of a specific manga.
      *
      * @param id The unique identifier of the manga.
