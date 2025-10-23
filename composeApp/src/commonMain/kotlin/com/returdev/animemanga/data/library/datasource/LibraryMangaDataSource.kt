@@ -15,11 +15,11 @@ import kotlin.time.ExperimentalTime
  * Data source responsible for managing manga entries in the user's library.
  *
  * @property mangaDAO The Data Access Object (DAO) used to perform database operations on manga entities.
- * @property transitionRunner A suspend lambda used to execute database operations within a transactional context.
+ * @property transactionRunner A suspend lambda used to execute database operations within a transactional context.
  */
 class LibraryMangaDataSource(
     private val mangaDAO : LibraryMangaDAO,
-    private val transitionRunner : suspend (suspend () -> Unit) -> Unit
+    private val transactionRunner : suspend (suspend () -> Unit) -> Unit
 ) {
 
     /**
@@ -103,7 +103,7 @@ class LibraryMangaDataSource(
      */
     @OptIn(ExperimentalTime::class)
     suspend fun updateMangaStatus(id : Int, status : UserLibraryStatusModel) {
-        transitionRunner {
+        transactionRunner {
             val currentDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date
             val currentStatus = getMangaStatusById(id)
 
