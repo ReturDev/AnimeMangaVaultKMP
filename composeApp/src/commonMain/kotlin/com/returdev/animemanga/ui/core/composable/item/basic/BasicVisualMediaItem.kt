@@ -38,6 +38,44 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
+ * A basic visual representation of a media item with an image, title, and type label.
+ *
+ * @param modifier Optional [Modifier] to be applied to the container.
+ * @param imageUrl URL of the media's thumbnail or cover image.
+ * @param title Display title of the media item.
+ * @param type The media type (e.g., "TV", "Movie", "Manga", etc.), shown in the scrim overlay.
+ * @param onClick Lambda invoked when the media item is clicked.
+ */
+@Composable
+fun BasicVisualMediaItem(
+    modifier : Modifier = Modifier,
+    imageUrl : String,
+    title : String,
+    type : String,
+    onClick : () -> Unit
+) {
+    BasicVisualMediaItem(
+        modifier = modifier,
+        imageUrl = imageUrl,
+        title = title,
+        onClick = onClick,
+        scrimContent = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = type,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+    )
+}
+
+
+/**
  * A reusable composable that displays a media item (anime/manga/etc.)
  * with its cover image, title, type, and rating.
  *
@@ -107,7 +145,7 @@ fun BasicVisualMediaItem(
  * @param content Optional composable shown below the title.
  */
 @Composable
-fun BasicVisualMediaItem(
+private fun BasicVisualMediaItem(
     modifier : Modifier = Modifier,
     imageUrl : String,
     title : String,
@@ -157,7 +195,7 @@ private fun ItemImage(
     Box(
         modifier = modifier,
         contentAlignment = Alignment.TopEnd
-    ){
+    ) {
         Image(imageUrl = imageUrl)
         ImageScrim(content = scrimContent)
     }
@@ -171,13 +209,13 @@ private fun ItemImage(
 private fun ImageScrim(
     modifier : Modifier = Modifier,
     content : @Composable () -> Unit
-){
+) {
     Box(
         modifier = modifier
             .padding(8.dp)
             .clip(VisualMediaItemDefaults.scrimShape)
             .background(color = ScrimColor),
-    ){
+    ) {
         // Change local content color for proper contrast over scrim
         CompositionLocalProvider(LocalContentColor provides OnScrimColor) {
             Box(
