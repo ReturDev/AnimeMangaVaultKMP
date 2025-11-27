@@ -21,7 +21,7 @@ import com.returdev.animemanga.domain.model.manga.MangaModel
  */
 fun AnimeExtendedResponse.toPagedDomainModel() = AnimeModel(
     basicInfo = this.getBasicInfo(),
-    trailer = trailer.toPagedDomainModel(),
+    trailer = trailer.toDomainModel(),
     extraTitles = titles.toTitleModelList(),
     numberOfScorers = numberOfScorers,
     rank = rank,
@@ -32,7 +32,7 @@ fun AnimeExtendedResponse.toPagedDomainModel() = AnimeModel(
     source = source,
     episodes = episodes,
     airing = airing,
-    aired = aired.toPagedDomainModel(),
+    aired = aired.toDomainModel(),
     season = season
 )
 
@@ -103,7 +103,7 @@ fun MangaExtendedResponse.toPagedDomainModel() = MangaModel(
     chapters = chapters,
     volumes = volumes,
     isPublishing = publishing,
-    published = published.toPagedDomainModel()
+    published = published.toDomainModel()
 )
 
 /**

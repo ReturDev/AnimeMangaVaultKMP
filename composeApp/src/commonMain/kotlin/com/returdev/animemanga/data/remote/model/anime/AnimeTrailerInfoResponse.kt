@@ -6,13 +6,11 @@ import kotlinx.serialization.Serializable
 /**
  * Data class representing trailer information for an anime.
  *
- * @property videoUrl The direct URL to the trailer video.
  * @property embeddedVideoUrl The URL for embedding the trailer video.
  * @property trailerImages An object containing URLs for trailer images in different sizes.
  */
 @Serializable
 data class AnimeTrailerInfoResponse(
-    @SerialName("url") val videoUrl : String?,
     @SerialName("embed_url") val embeddedVideoUrl : String?,
     @SerialName("images") val trailerImages : TrailerImages
 ) {
@@ -25,8 +23,8 @@ data class AnimeTrailerInfoResponse(
      */
     @Serializable
     data class TrailerImages(
-        @SerialName("medium_image_url") val mediumImageUrl : String?,
-        @SerialName("large_image_url") val largeImageUrl : String?
+        @SerialName("image_url") val imageUrl : String?,
+        @SerialName("medium_image_url") val mediumImageUrl : String?
     )
 
 }

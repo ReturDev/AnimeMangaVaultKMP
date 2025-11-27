@@ -25,7 +25,7 @@ import com.returdev.animemanga.domain.model.visualmedia.VisualMediaModel
  */
 data class AnimeModel(
     override val basicInfo : AnimeBasicModel,
-    val trailer : TrailerModel,
+    val trailer : TrailerModel?,
     override val extraTitles : List<TitleModel>,
     override val numberOfScorers: Long,
     override val rank: Int,
