@@ -79,6 +79,8 @@ kotlin {
             //Navigation
             implementation(libs.navigation.compose)
 
+            //Video Player
+            implementation(libs.compose.multiplatform.media.player)
         }
         iosMain.dependencies {
             //Ktor
