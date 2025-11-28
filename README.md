@@ -13,7 +13,7 @@ Shared business logic is implemented using **Clean Architecture**, with REST API
 
 * [Motivation](#-motivation)
 * [Main Features](#-main-features)
-* [Technologies Used]([#%EF%B8%8F-technologies-used)
+* [Technologies Used](#%EF%B8%8F-technologies-used)
 * [Project Architecture](#-project-architecture)
 * [Installation & Running the Project](#-installation--running-the-project)
 * [Screenshots / Demo](#-screenshots--demo)
