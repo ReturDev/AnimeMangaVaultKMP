@@ -37,11 +37,11 @@ interface LibraryMangaDAO {
                 "OFFSET :offset "
     )
     fun getMangaByStatus(
-        status: String,
-        orderBy: Int,
+        status : String,
+        orderBy : Int,
         limit : Int,
         offset : Int
-    ): Flow<List<LibraryMangaEntity>>
+    ) : Flow<List<LibraryMangaEntity>>
 
     /**
      * Retrieves a paginated list of manga by status, sorted in **descending** order.
@@ -64,11 +64,11 @@ interface LibraryMangaDAO {
                 "OFFSET :offset "
     )
     fun getMangaByStatusDesc(
-        status: String,
-        orderBy: Int,
+        status : String,
+        orderBy : Int,
         limit : Int,
         offset : Int
-    ): Flow<List<LibraryMangaEntity>>
+    ) : Flow<List<LibraryMangaEntity>>
 
     /**
      * Retrieves the total number of manga entries in the library
@@ -80,14 +80,15 @@ interface LibraryMangaDAO {
     @Query("SELECT COUNT(id) FROM library_manga WHERE status = :status")
     suspend fun getMangasCountByStatus(status : String) : Int
 
+
     /**
-     * Retrieves the library status of a specific manga by its ID.
+     * Returns a stream of the library status for the manga with the given ID.
      *
-     * @param id The unique identifier of the manga.
-     * @return The status string (e.g., "reading", "completed").
+     * @param id The unique identifier of the manga whose status should be retrieved.
+     * @return A [Flow] emitting the status as a nullable [String].
      */
     @Query("SELECT status FROM library_manga WHERE id = :id")
-    suspend fun getMangaStatusById(id: Int): String
+    fun getMangaStatusById(id : Int) : Flow<String?>
 
     /**
      * Inserts a new manga into the library.
@@ -97,7 +98,7 @@ interface LibraryMangaDAO {
      * @param manga The [LibraryMangaEntity] object to insert.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertManga(manga: LibraryMangaEntity)
+    suspend fun insertManga(manga : LibraryMangaEntity)
 
     /**
      * Updates the status and the added date of a manga in the library.
@@ -108,7 +109,7 @@ interface LibraryMangaDAO {
      * @return The number of rows affected (0 if no match was found).
      */
     @Query("UPDATE library_manga SET status = :status , added_date = :date WHERE id = :id")
-    suspend fun updateMangaStatus(status: String, date: LocalDate, id: Int): Int
+    suspend fun updateMangaStatus(status : String, date : LocalDate, id : Int) : Int
 
     /**
      * Deletes a specific manga from the library by its ID.
@@ -117,7 +118,7 @@ interface LibraryMangaDAO {
      * @return The number of rows deleted (0 if no match was found).
      */
     @Query("DELETE FROM library_manga WHERE id = :id")
-    suspend fun deleteManga(id: Int): Int
+    suspend fun deleteManga(id : Int) : Int
 
     /**
      * Deletes all manga entries from the library.

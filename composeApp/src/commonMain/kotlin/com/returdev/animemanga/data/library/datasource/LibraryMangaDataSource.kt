@@ -6,6 +6,8 @@ import com.returdev.animemanga.data.library.model.entity.LibraryMangaEntity
 import com.returdev.animemanga.domain.model.core.search.common.SortDirection
 import com.returdev.animemanga.domain.model.library.UserLibraryStatusModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
@@ -68,15 +70,15 @@ class LibraryMangaDataSource(
         return mangaDAO.getMangasCountByStatus(status.name)
     }
 
-
     /**
-     * Retrieves the current library status of a specific manga.
+     * Returns a stream of the library status for the manga with the given ID.
      *
-     * @param id The unique identifier of the manga.
-     * @return The [UserLibraryStatusModel] representing the manga's current library status.
+     * @param id The unique identifier of the manga whose status should be retrieved.
+     * @return A [Flow] emitting the status as a nullable [UserLibraryStatusModel].
      */
-    suspend fun getMangaStatusById(id : Int) : UserLibraryStatusModel {
-        return UserLibraryStatusModel.valueOf(mangaDAO.getMangaStatusById(id))
+    fun getMangaStatusById(id : Int) : Flow<UserLibraryStatusModel?> {
+        return mangaDAO.getMangaStatusById(id)
+            .map { value -> value?.let { UserLibraryStatusModel.valueOf(it) } }
     }
 
     /**
@@ -107,7 +109,7 @@ class LibraryMangaDataSource(
             val currentDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date
             val currentStatus = getMangaStatusById(id)
 
-            if (currentStatus != status) {
+            if (currentStatus.firstOrNull() != status) {
                 mangaDAO.updateMangaStatus(status = status.name, date = currentDate, id = id)
             }
         }

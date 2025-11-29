@@ -39,11 +39,11 @@ interface LibraryAnimeDAO {
                 "OFFSET :offset "
     )
     fun getAnimesByStatus(
-        status: String,
-        orderBy: Int,
-        limit: Int,
-        offset: Int
-    ): Flow<List<LibraryAnimeEntity>>
+        status : String,
+        orderBy : Int,
+        limit : Int,
+        offset : Int
+    ) : Flow<List<LibraryAnimeEntity>>
 
     /**
      * Same as [getAnimesByStatus], but sorts in **descending** order.
@@ -68,11 +68,11 @@ interface LibraryAnimeDAO {
                 "OFFSET :offset "
     )
     fun getAnimesByStatusDesc(
-        status: String,
-        orderBy: Int,
-        limit: Int,
-        offset: Int
-    ): Flow<List<LibraryAnimeEntity>>
+        status : String,
+        orderBy : Int,
+        limit : Int,
+        offset : Int
+    ) : Flow<List<LibraryAnimeEntity>>
 
     /**
      * Retrieves the total number of anime entries in the library
@@ -82,17 +82,16 @@ interface LibraryAnimeDAO {
      * @return The total count of anime items with the given status.
      */
     @Query("SELECT COUNT(id) FROM library_anime WHERE status = :status")
-    suspend fun getAnimesCountByStatus(status: String): Int
-
+    suspend fun getAnimesCountByStatus(status : String) : Int
 
     /**
-     * Retrieves the status of a specific anime by its ID.
+     * Returns a stream of the library status for the anime with the given ID.
      *
-     * @param id The unique identifier of the anime.
-     * @return The status string (e.g., "watching", "completed").
+     * @param id The unique identifier of the anime whose status should be retrieved.
+     * @return A [Flow] emitting the status as a nullable [String].
      */
     @Query("SELECT status FROM library_anime WHERE id = :id")
-    suspend fun getAnimeStatusById(id: Int): String
+    fun getAnimeStatusById(id : Int) : Flow<String?>
 
     /**
      * Inserts a new anime into the library.
@@ -102,7 +101,7 @@ interface LibraryAnimeDAO {
      * @param anime The anime entity to insert.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAnime(anime: LibraryAnimeEntity)
+    suspend fun insertAnime(anime : LibraryAnimeEntity)
 
     /**
      * Updates the status and added date of an anime in the library.
@@ -113,7 +112,7 @@ interface LibraryAnimeDAO {
      * @return The number of rows updated (0 if none).
      */
     @Query("UPDATE library_anime SET status = :status , added_date = :date WHERE id = :id")
-    suspend fun updateAnimeStatus(status: String, date: LocalDate, id: Int): Int
+    suspend fun updateAnimeStatus(status : String, date : LocalDate, id : Int) : Int
 
     /**
      * Deletes a specific anime from the library by its ID.
@@ -122,7 +121,7 @@ interface LibraryAnimeDAO {
      * @return The number of rows deleted (0 if none).
      */
     @Query("DELETE FROM library_anime WHERE id = :id")
-    suspend fun deleteAnime(id: Int): Int
+    suspend fun deleteAnime(id : Int) : Int
 
     /**
      * Deletes all anime entries from the library.

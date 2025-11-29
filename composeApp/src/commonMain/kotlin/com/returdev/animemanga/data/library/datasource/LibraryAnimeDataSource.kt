@@ -6,6 +6,8 @@ import com.returdev.animemanga.data.library.model.entity.LibraryAnimeEntity
 import com.returdev.animemanga.domain.model.core.search.common.SortDirection
 import com.returdev.animemanga.domain.model.library.UserLibraryStatusModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
@@ -68,13 +70,13 @@ class LibraryAnimeDataSource(
     }
 
     /**
-     * Retrieves the current library status of a specific anime.
+     * Returns a stream of the library status for the anime with the given ID.
      *
-     * @param id The unique identifier of the anime.
-     * @return The [UserLibraryStatusModel] representing the anime's current status.
+     * @param id The unique identifier of the anime whose status should be retrieved.
+     * @return A [Flow] emitting the status as a nullable [UserLibraryStatusModel].
      */
-    suspend fun getAnimeStatusById(id : Int) : UserLibraryStatusModel {
-        return UserLibraryStatusModel.valueOf(animeDAO.getAnimeStatusById(id))
+    fun getAnimeStatusById(id : Int) : Flow<UserLibraryStatusModel?> {
+        return animeDAO.getAnimeStatusById(id).map{value -> value?.let { UserLibraryStatusModel.valueOf(it) }}
     }
 
     /**
@@ -102,7 +104,7 @@ class LibraryAnimeDataSource(
             val currentDate = Clock.System.now().toLocalDateTime(TimeZone.UTC).date
             val currentStatus = getAnimeStatusById(id)
 
-            if (currentStatus != status) {
+            if (currentStatus.firstOrNull() != status) {
                 animeDAO.updateAnimeStatus(status = status.name, date = currentDate, id = id)
             }
         }
