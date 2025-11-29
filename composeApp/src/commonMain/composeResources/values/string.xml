@@ -1,3 +1,30 @@
 <resources>
     <string name="rate_icon_content_description">Rate</string>
+    <string name="nav_label_home">Home</string>
+    <string name="nav_label_anime">Anime</string>
+    <string name="nav_label_manga">Manga</string>
+    <string name="nav_label_library">Library</string>
+    <string name="show_more_button_text">Show more</string>
+    <string name="retry_button_text">Retry</string>
+    <string name="error_loading_content">Data could not be loaded</string>
+    <string name="top_anime_title">Top Anime</string>
+    <string name="top_manga_title">Top Manga</string>
+    <string name="anime_current_season_title">Anime Current Season</string>
+    <string name="anime_next_season_title">Anime Next Season</string>
+    <string name="visual_media_state_following">Following</string>
+    <string name="visual_media_state_favourites">Favourites</string>
+    <string name="visual_media_state_completed">Completed</string>
+    <string name="visual_media_state_on_hold">On Hold</string>
+    <string name="visual_media_state_dropped">Dropped</string>
+    <string name="close_search_bar_content_description">Close search bar</string>
+    <string name="search_content_description">Search</string>
+    <string name="clear_text_content_description">Clear text</string>
+    <string name="search_hint_text">Search...</string>
+    <string name="search_no_results_found">No results found</string>
+    <string name="episodes">Episodes</string>
+    <string name="chapters">Chapters</string>
+    <string name="trailer_thumbnail_content_description">Trailer</string>
+    <string name="trailer_play_content_description">Play trailer</string>
+    <string name="button_cancel_label">Cancel</string>
+    <string name="button_save_label">Save</string>
 </resources>
