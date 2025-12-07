@@ -11,7 +11,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.returdev.animemanga.ui.model.detailed.VisualMediaDetailedUi
@@ -35,16 +34,9 @@ import com.returdev.animemanga.ui.screen.detail.DetailScreenState
 fun CommonDetailScreen(
     modifier : Modifier = Modifier,
     uiState : DetailScreenState,
-    onLibraryStatusChange : (UserLibraryStatusUI?, Boolean) -> Unit,
+    onLibraryStatusChange : (UserLibraryStatusUI?) -> Unit,
     extraContent : @Composable (VisualMediaDetailedUi) -> Unit = {}
 ) {
-
-    LaunchedEffect(uiState.visualMediaLibraryStatus, uiState.visualMediaState) {
-        onLibraryStatusChange(
-            uiState.visualMediaLibraryStatus,
-            uiState.visualMediaState is DetailScreenState.VisualMediaState.Loaded<*>
-        )
-    }
 
     val scrollState = rememberScrollState()
 
@@ -65,7 +57,9 @@ fun CommonDetailScreen(
             ) {
 
                 DetailScreenHeader(
-                    visualMediaDetailedUi = visualMedia
+                    visualMediaDetailedUi = visualMedia,
+                    currentUserLibraryStatus = uiState.visualMediaLibraryStatus,
+                    onLibraryStatusChange = onLibraryStatusChange
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
