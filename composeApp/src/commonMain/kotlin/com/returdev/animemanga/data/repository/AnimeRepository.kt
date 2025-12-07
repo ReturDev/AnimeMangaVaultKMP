@@ -1,7 +1,6 @@
 package com.returdev.animemanga.data.repository
 
 import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.returdev.animemanga.core.Logger
 import com.returdev.animemanga.data.cache.datasource.CacheMetadataDataSource
@@ -16,7 +15,6 @@ import com.returdev.animemanga.data.paging.GenericPagingSource
 import com.returdev.animemanga.data.remote.model.core.extension.toDomainModel
 import com.returdev.animemanga.data.remote.model.core.extension.toPagedDomainModel
 import com.returdev.animemanga.data.remote.repository.AnimeRemoteRepository
-import com.returdev.animemanga.data.remote.service.ApiService
 import com.returdev.animemanga.data.repository.AnimeRepository.Companion.MONTHS_FOR_GENRES_UPDATE
 import com.returdev.animemanga.data.repository.AnimeRepository.Companion.MONTHS_FOR_SEASON_UPDATE
 import com.returdev.animemanga.data.repository.core.RepositoryUtil

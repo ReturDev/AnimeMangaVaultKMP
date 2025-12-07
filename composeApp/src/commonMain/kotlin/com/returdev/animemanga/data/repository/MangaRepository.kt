@@ -1,7 +1,6 @@
 package com.returdev.animemanga.data.repository
 
 import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.returdev.animemanga.core.Logger
 import com.returdev.animemanga.data.cache.datasource.CacheMetadataDataSource
@@ -14,7 +13,6 @@ import com.returdev.animemanga.data.paging.MangaPagingSource
 import com.returdev.animemanga.data.remote.model.core.extension.toDomainModel
 import com.returdev.animemanga.data.remote.model.core.extension.toPagedDomainModel
 import com.returdev.animemanga.data.remote.repository.MangaRemoteRepository
-import com.returdev.animemanga.data.remote.service.ApiService
 import com.returdev.animemanga.data.repository.core.RepositoryUtil
 import com.returdev.animemanga.domain.model.core.result.DomainResult
 import com.returdev.animemanga.domain.model.core.search.SearchFilters
@@ -37,7 +35,7 @@ import kotlinx.coroutines.flow.Flow
 class MangaRepository(
     private val mangaRepository : MangaRemoteRepository,
     private val mangaPagingSource : MangaPagingSource,
-    private val genreDataSource  : MangaGenreCacheDataSource,
+    private val genreDataSource : MangaGenreCacheDataSource,
     private val metadataDataSource : CacheMetadataDataSource
 ) {
 

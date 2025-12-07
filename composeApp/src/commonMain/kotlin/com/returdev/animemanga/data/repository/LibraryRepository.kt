@@ -15,6 +15,7 @@ import com.returdev.animemanga.domain.model.core.search.common.SortDirection
 import com.returdev.animemanga.domain.model.library.UserLibraryStatusModel
 import com.returdev.animemanga.domain.model.manga.MangaBasicModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
@@ -46,7 +47,7 @@ class LibraryRepository(
      * @param id The anime's unique identifier.
      * @return The corresponding [UserLibraryStatusModel].
      */
-    suspend fun getAnimeStatusById(id : Int) : UserLibraryStatusModel {
+    fun getAnimeStatusById(id : Int) : Flow<UserLibraryStatusModel?> {
         return animeDataSource.getAnimeStatusById(id)
     }
 
@@ -56,7 +57,7 @@ class LibraryRepository(
      * @param id The manga's unique identifier.
      * @return The corresponding [UserLibraryStatusModel].
      */
-    suspend fun getMangaStatusById(id : Int) : UserLibraryStatusModel {
+    fun getMangaStatusById(id : Int) : Flow<UserLibraryStatusModel?> {
         return mangaDataSource.getMangaStatusById(id)
     }
 
@@ -173,36 +174,34 @@ class LibraryRepository(
     }
 
     /**
-     * Updates the status of an anime in the library.
+     * Changes the library status of an anime entry.
      *
-     * @param animeId The anime to update.
-     * @param newStatus The new status to apply.
-     */
-    suspend fun changeAnimeStatus(animeId : Int, newStatus : UserLibraryStatusModel) {
-        animeDataSource.updateAnimeStatus(animeId, newStatus)
-    }
-
-    /**
-     * Updates the status of a manga.
+     * If [newStatus] is non-null, the anime's status is updated.
+     * If [newStatus] is null, the anime entry is removed from the library.
      *
-     * @param mangaId The manga ID.
-     * @param newStatus New status to assign.
+     * @param animeId The ID of the anime whose status should be modified.
+     * @param newStatus The new status to assign, or `null` to remove the anime from the library.
      */
-    suspend fun changeMangaStatus(mangaId : Int, newStatus : UserLibraryStatusModel) {
-        mangaDataSource.updateMangaStatus(mangaId, newStatus)
+    suspend fun changeAnimeStatus(animeId : Int, newStatus : UserLibraryStatusModel?) {
+        newStatus
+            ?.let { status -> animeDataSource.updateAnimeStatus(animeId, status) }
+            ?: animeDataSource.deleteAnime(animeId)
     }
 
     /**
-     * Removes an anime from the library.
+     * Changes the library status of a manga entry.
+     *
+     * If [newStatus] is non-null, the manga's status is updated.
+     * If [newStatus] is null, the manga entry is removed from the library.
+     *
+     * @param mangaId The ID of the manga whose status should be modified.
+     * @param newStatus The new status to assign, or `null` to remove the manga from the library.
      */
-    suspend fun removeAnime(animeId : Int) {
-        animeDataSource.deleteAnime(animeId)
+    suspend fun changeMangaStatus(mangaId : Int, newStatus : UserLibraryStatusModel?) {
+        newStatus
+            ?.let { status -> mangaDataSource.updateMangaStatus(mangaId, status) }
+            ?: mangaDataSource.deleteManga(mangaId)
     }
 
-    /**
-     * Removes a manga from the library.
-     */
-    suspend fun removeManga(mangaId : Int) {
-        mangaDataSource.deleteManga(mangaId)
-    }
+
 }
