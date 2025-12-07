@@ -164,7 +164,7 @@ private fun SectionHeader(
         Text(
             modifier = Modifier.weight(1f),
             text = title,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleMedium
         )
         onShowMore?.let {
             TextButton(onClick = onShowMore) {
