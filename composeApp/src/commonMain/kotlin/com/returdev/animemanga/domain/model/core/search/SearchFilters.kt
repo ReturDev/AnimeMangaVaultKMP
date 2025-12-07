@@ -28,7 +28,7 @@ import kotlinx.datetime.LocalDate
  * - AnimeFilters: Filters specific to anime searches.
  * - MangaFilters: Filters specific to manga searches.
  */
-sealed class SearchFilters{
+sealed class SearchFilters {
 
     abstract val type : Any?
     abstract val status : Any?
@@ -54,11 +54,11 @@ sealed class SearchFilters{
      * @property endDate The end date to filter anime.
      */
     data class AnimeFilters(
-        override val type: AnimeTypeFilters? = null,
-        override val status: AnimeStatusFilters? = null,
-        override val genreIds: List<Int> = emptyList(),
-        override val orderBy: AnimeOrderByFilters? = null,
-        override val sort: SortDirection = SortDirection.ASCENDANT,
+        override val type : AnimeTypeFilters? = null,
+        override val status : AnimeStatusFilters? = null,
+        override val genreIds : List<Int> = emptyList(),
+        override val orderBy : AnimeOrderByFilters? = null,
+        override val sort : SortDirection = SortDirection.ASCENDANT,
         override val score : Int? = null,
         override val publisherIds : List<Int> = emptyList(),
         override val startDate : LocalDate? = null,
@@ -80,12 +80,12 @@ sealed class SearchFilters{
      * @property endDate The end date to filter manga.
      */
     data class MangaFilters(
-        override val type: MangaTypeFilters? = null,
-        override val status: MangaStatusFilters? = null,
-        override val genreIds: List<Int> = emptyList(),
-        override val orderBy: MangaOrderByFilters? = null,
-        override val sort: SortDirection = SortDirection.ASCENDANT,
-        override val score : Int?,
+        override val type : MangaTypeFilters? = null,
+        override val status : MangaStatusFilters? = null,
+        override val genreIds : List<Int> = emptyList(),
+        override val orderBy : MangaOrderByFilters? = null,
+        override val sort : SortDirection = SortDirection.ASCENDANT,
+        override val score : Int? = null,
         override val publisherIds : List<Int> = emptyList(),
         override val startDate : LocalDate? = null,
         override val endDate : LocalDate? = null
