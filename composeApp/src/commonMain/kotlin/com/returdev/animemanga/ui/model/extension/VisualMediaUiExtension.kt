@@ -17,38 +17,6 @@ import com.returdev.animemanga.ui.model.detailed.AnimeDetailedUi
 import com.returdev.animemanga.ui.model.detailed.MangaDetailedUi
 
 /**
- * Converts an [AnimeBasicModel] into an [AnimeBasicUi].
- *
- * Selects the first available [ImageType.NormalImage] for display purposes.
- *
- * @receiver The domain model representing basic anime data.
- * @return A UI model used for rendering anime items.
- */
-fun AnimeBasicModel.toUi(): AnimeBasicUi = AnimeBasicUi(
-    id = id,
-    image = images.first { it is ImageType.NormalImage } as ImageType.NormalImage,
-    title = title,
-    type = AnimeType.fromString(type),
-    score = score
-)
-
-/**
- * Converts a [MangaBasicModel] into a [MangaBasicUi].
- *
- * Selects the first available [ImageType.NormalImage] to represent the manga visually.
- *
- * @receiver The domain model representing basic manga data.
- * @return A UI model used for rendering manga items.
- */
-fun MangaBasicModel.toUi(): MangaBasicUi = MangaBasicUi(
-    id = id,
-    image = images.first { it is ImageType.NormalImage } as ImageType.NormalImage,
-    title = title,
-    type = MangaType.fromString(type),
-    score = score
-)
-
-/**
  * Converts an [AnimeModel] into an [AnimeDetailedUi] for detailed screen rendering.
  *
  * Maps nested domain models such as titles and release information
@@ -57,7 +25,7 @@ fun MangaBasicModel.toUi(): MangaBasicUi = MangaBasicUi(
  * @receiver The domain model containing full anime details.
  * @return A UI-ready detailed anime model.
  */
-fun AnimeModel.toUi(): AnimeDetailedUi = AnimeDetailedUi(
+fun AnimeModel.toUi() : AnimeDetailedUi = AnimeDetailedUi(
     basicInfo = this.basicInfo.toUi(),
     trailer = this.trailer,
     extraTitles = this.extraTitles.map { it.toUi() },
@@ -75,6 +43,70 @@ fun AnimeModel.toUi(): AnimeDetailedUi = AnimeDetailedUi(
 )
 
 /**
+ * Converts an [AnimeBasicModel] into an [AnimeBasicUi].
+ *
+ * Selects the first available [ImageType.NormalImage] for display purposes.
+ *
+ * @receiver The domain model representing basic anime data.
+ * @return A UI model used for rendering anime items.
+ */
+fun AnimeBasicModel.toUi() : AnimeBasicUi = AnimeBasicUi(
+    id = id,
+    image = images.first { it is ImageType.NormalImage } as ImageType.NormalImage,
+    title = title,
+    type = AnimeType.fromString(type),
+    score = score
+)
+
+/**
+ * Converts an [AnimeBasicUi] back into an [AnimeBasicModel].
+ *
+ * Wraps the displayed image into a list to match the domain model format.
+ *
+ * @receiver The UI model representing basic anime information.
+ * @return The domain version of this model.
+ */
+fun AnimeBasicUi.toDomain() = AnimeBasicModel(
+    id = this.id,
+    images = listOf(this.image),
+    title = this.title,
+    type = this.type.name,
+    score = this.score
+)
+
+/**
+ * Converts a [MangaBasicModel] into a [MangaBasicUi].
+ *
+ * Selects the first available [ImageType.NormalImage] to represent the manga visually.
+ *
+ * @receiver The domain model representing basic manga data.
+ * @return A UI model used for rendering manga items.
+ */
+fun MangaBasicModel.toUi() : MangaBasicUi = MangaBasicUi(
+    id = id,
+    image = images.first { it is ImageType.NormalImage } as ImageType.NormalImage,
+    title = title,
+    type = MangaType.fromString(type),
+    score = score
+)
+
+/**
+ * Converts a [MangaBasicUi] back into a [MangaBasicModel].
+ *
+ * Wraps the displayed image into a list to match domain requirements.
+ *
+ * @receiver The UI model containing basic manga info.
+ * @return The equivalent domain model.
+ */
+fun MangaBasicUi.toDomain() = MangaBasicModel(
+    id = this.id,
+    images = listOf(this.image),
+    title = this.title,
+    type = this.type.name,
+    score = this.score
+)
+
+/**
  * Converts a [MangaModel] into a [MangaDetailedUi] for detailed UI presentation.
  *
  * Maps nested domain fields such as titles and release data,
@@ -83,7 +115,7 @@ fun AnimeModel.toUi(): AnimeDetailedUi = AnimeDetailedUi(
  * @receiver The full domain object for a manga entry.
  * @return A UI model containing all necessary manga details.
  */
-fun MangaModel.toUi(): MangaDetailedUi = MangaDetailedUi(
+fun MangaModel.toUi() : MangaDetailedUi = MangaDetailedUi(
     this.basicInfo.toUi(),
     this.extraTitles.map { it.toUi() },
     this.numberOfScorers,
@@ -101,14 +133,14 @@ fun MangaModel.toUi(): MangaDetailedUi = MangaDetailedUi(
 /**
  * Converts a [TitleModel] into a [TitleUi].
  *
- * Extracts the title type by removing the suffix `"Title"` from the class name
- * and copies the localized or alternate title string.
+ * Copies both the title type and localized/alternate title value
+ * without transformation.
  *
  * @receiver A domain title representation.
  * @return A UI-friendly title model.
  */
 fun TitleModel.toUi() = TitleUi(
-    titleType = this::class.simpleName?.replace("Title", "").orEmpty(),
+    titleType = this.titleType,
     title = this.title
 )
 
