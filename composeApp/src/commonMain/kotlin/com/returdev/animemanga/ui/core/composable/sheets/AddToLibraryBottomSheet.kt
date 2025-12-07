@@ -41,10 +41,10 @@ import org.jetbrains.compose.resources.vectorResource
  */
 @Composable
 fun AddToLibraryBottomSheet(
-    modifier: Modifier = Modifier,
-    currentUserLibraryStatus: UserLibraryStatusUI?,
-    onSave: (UserLibraryStatusUI?) -> Unit,
-    onCancel: () -> Unit
+    modifier : Modifier = Modifier,
+    currentUserLibraryStatus : UserLibraryStatusUI?,
+    onSave : (UserLibraryStatusUI?) -> Unit,
+    onCancel : () -> Unit
 ) {
 
     val statusSelected = remember { mutableStateOf(currentUserLibraryStatus) }
@@ -53,7 +53,7 @@ fun AddToLibraryBottomSheet(
         modifier = modifier,
         primaryActionText = stringResource(Res.string.button_cancel_label),
         secondaryActionText = stringResource(Res.string.button_save_label),
-        onPrimaryAction = onCancel,
+        onPrimaryAction = {},
         onSecondaryAction = { onSave(statusSelected.value) },
         onDismiss = onCancel
     ) {
@@ -86,14 +86,14 @@ fun AddToLibraryBottomSheet(
  */
 @Composable
 private fun StatusButton(
-    modifier: Modifier = Modifier,
-    status: String,
-    isSelected: Boolean,
-    onClick: (Boolean) -> Unit
+    modifier : Modifier = Modifier,
+    status : String,
+    isSelected : Boolean,
+    onClick : (Boolean) -> Unit
 ) {
 
-    val backgroundColor: Color
-    val contentColor: Color
+    val backgroundColor : Color
+    val contentColor : Color
 
     if (isSelected) {
         backgroundColor = MaterialTheme.colorScheme.secondary
