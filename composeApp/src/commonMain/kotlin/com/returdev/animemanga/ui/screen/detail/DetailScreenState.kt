@@ -41,5 +41,16 @@ data class DetailScreenState(
          * @property message A descriptive error message explaining what went wrong.
          */
         data class Error(val message : String) : VisualMediaState()
+
+        inline fun <reified T : VisualMediaDetailedUi> asLoaded(): T? {
+            return if (this is Loaded<*> && this.visualMedia is T) {
+                this.visualMedia
+            } else null
+        }
     }
+
+
 }
+
+
+
