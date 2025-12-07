@@ -1,6 +1,7 @@
 package com.returdev.animemanga.ui.screen.detail.composables
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -13,21 +14,31 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import animemangavaultkmp.composeapp.generated.resources.Res
+import animemangavaultkmp.composeapp.generated.resources.ic_bookmark_add
+import animemangavaultkmp.composeapp.generated.resources.ic_bookmark_added
 import animemangavaultkmp.composeapp.generated.resources.ic_outline_star
 import coil3.compose.AsyncImage
 import com.returdev.animemanga.core.format
+import com.returdev.animemanga.ui.core.composable.sheets.AddToLibraryBottomSheet
 import com.returdev.animemanga.ui.model.detailed.VisualMediaDetailedUi
+import com.returdev.animemanga.ui.model.user.UserLibraryStatusUI
 import org.jetbrains.compose.resources.painterResource
 
 
@@ -42,16 +53,33 @@ import org.jetbrains.compose.resources.painterResource
  */
 @Composable
 fun DetailScreenHeader(
-    visualMediaDetailedUi : VisualMediaDetailedUi
+    visualMediaDetailedUi : VisualMediaDetailedUi,
+    currentUserLibraryStatus : UserLibraryStatusUI?,
+    onLibraryStatusChange : (UserLibraryStatusUI?) -> Unit
 ) {
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        VisualMediaImage(
-            imageUrl = visualMediaDetailedUi.basicInfo.image.url
-        )
+
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            AddLibraryStatusButton(
+                modifier = Modifier.align(Alignment.TopEnd).padding(8.dp),
+                currentUserLibraryStatus = currentUserLibraryStatus,
+                onLibraryStatusChange = onLibraryStatusChange
+            )
+
+
+            VisualMediaImage(
+                modifier = Modifier.align(Alignment.Center),
+                imageUrl = visualMediaDetailedUi.basicInfo.image.url
+            )
+
+        }
 
         Column(
             Modifier.padding(horizontal = 16.dp),
@@ -84,10 +112,58 @@ private fun VisualMediaImage(
     imageUrl : String
 ) {
     AsyncImage(
-        modifier = modifier.shadow(elevation = 16.dp).height(250.dp),
+        modifier = modifier.shadow(elevation = 16.dp)
+            .height(250.dp)
+            .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)),
         model = imageUrl,
         contentDescription = null
     )
+}
+
+/**
+ * Displays a button that allows the user to add or update the library status
+ * of a visual media item (anime or manga).
+ *
+ * @param modifier Modifier applied to the button.
+ * @param currentUserLibraryStatus The current status of the media in the user's library,
+ * or `null` if the media has not been added yet.
+ * @param onLibraryStatusChange Callback invoked when the user selects a new status
+ * or removes the current one. Receives `null` when the user clears the status.
+ */
+@Composable
+private fun AddLibraryStatusButton(
+    modifier : Modifier = Modifier,
+    currentUserLibraryStatus : UserLibraryStatusUI?,
+    onLibraryStatusChange : (UserLibraryStatusUI?) -> Unit
+) {
+
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+
+        AddToLibraryBottomSheet(
+            currentUserLibraryStatus = currentUserLibraryStatus,
+            onSave = onLibraryStatusChange,
+            onCancel = { showSheet = false }
+        )
+
+    }
+
+    IconButton(
+        modifier = modifier,
+        onClick = {
+            showSheet = true
+        }
+    ) {
+        Icon(
+            painter = painterResource(
+                resource = if (currentUserLibraryStatus == null) Res.drawable.ic_bookmark_add
+                else Res.drawable.ic_bookmark_added
+            ),
+            contentDescription = null
+        )
+    }
+
 }
 
 /**
