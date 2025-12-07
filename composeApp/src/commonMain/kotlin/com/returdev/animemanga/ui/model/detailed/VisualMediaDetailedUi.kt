@@ -19,43 +19,55 @@ sealed class VisualMediaDetailedUi() {
      * Basic information about the visual media item, such as title, image, type, or rating.
      * This is usually the minimal set of info shown in lists or previews.
      */
-    abstract val basicInfo: VisualMediaBasicUi
+    abstract val basicInfo : VisualMediaBasicUi
 
     /**
      * A list of alternative or translated titles for this media.
      * These may include English titles, Japanese titles, or other variants.
      */
-    abstract val extraTitles: List<TitleUi>
+    abstract val extraTitles : List<TitleUi>
 
     /**
      * The number of users who have contributed to the score or rating of this media.
      * Useful for evaluating score reliability.
      */
-    abstract val numberOfScorers: Long
+    abstract val numberOfScorers : Long
 
     /**
      * The ranking of this media compared to all other entries (e.g., #42 most popular).
      */
-    abstract val rank: Int
+    abstract val rank : Int
 
     /**
      * A descriptive summary of the media's story or premise.
      */
-    abstract val synopsis: String
+    abstract val synopsis : String
 
     /**
      * The publishing or airing status (e.g., "Finished", "Airing", "Ongoing").
      */
-    abstract val status: String
+    abstract val status : String
 
     /**
      * A list of demographic categories associated with the media
      */
-    abstract val demographics: List<GenreModel>
+    abstract val demographics : List<GenreModel>
 
     /**
      * A list of genres assigned to the media (e.g., Action, Romance, Fantasy).
      */
-    abstract val genres: List<GenreModel>
+    abstract val genres : List<GenreModel>
+
+    /**
+     * Returns a list of key–value pairs representing information fields
+     * that should be displayed in the detail screen.
+     *
+     * Each pair typically contains a label (e.g., `"Episodes"`, `"Published"`)
+     * and its associated value.
+     *
+     * @return A list of UI-ready information fields for structured display.
+     */
+    abstract fun getInfoFields() : List<Pair<String, String>>
+
 }
 
