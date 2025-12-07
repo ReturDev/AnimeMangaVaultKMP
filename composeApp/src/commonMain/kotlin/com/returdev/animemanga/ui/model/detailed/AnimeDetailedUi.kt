@@ -4,6 +4,7 @@ import com.returdev.animemanga.domain.model.anime.TrailerModel
 import com.returdev.animemanga.domain.model.core.GenreModel
 import com.returdev.animemanga.domain.model.core.ReleasedModel
 import com.returdev.animemanga.ui.model.basic.AnimeBasicUi
+import com.returdev.animemanga.ui.model.core.ReleasedUi
 import com.returdev.animemanga.ui.model.core.TitleUi
 
 /**
@@ -29,15 +30,24 @@ data class AnimeDetailedUi(
     override val basicInfo : AnimeBasicUi,
     val trailer : TrailerModel?,
     override val extraTitles : List<TitleUi>,
-    override val numberOfScorers: Long,
-    override val rank: Int,
-    override val synopsis: String,
-    override val status: String,
+    override val numberOfScorers : Long,
+    override val rank : Int,
+    override val synopsis : String,
+    override val status : String,
     override val demographics : List<GenreModel>,
     override val genres : List<GenreModel>,
-    val source: String,
-    val episodes: Int,
-    val airing: Boolean,
-    val aired: ReleasedModel,
-    val season: String?
-) : VisualMediaDetailedUi()
+    val source : String,
+    val episodes : Int,
+    val airing : Boolean,
+    val aired : ReleasedUi,
+    val season : String?
+) : VisualMediaDetailedUi() {
+    override fun getInfoFields() : List<Pair<String, String>> {
+        return listOf(
+            Pair("Source", this.source),
+            Pair("Episodes", this.episodes.toString()),
+            Pair("Status", this.status),
+            Pair("Released", this.aired.toString())
+        )
+    }
+}

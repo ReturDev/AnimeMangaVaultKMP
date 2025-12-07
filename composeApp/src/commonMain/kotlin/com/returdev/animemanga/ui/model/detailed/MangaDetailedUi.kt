@@ -3,7 +3,9 @@ package com.returdev.animemanga.ui.model.detailed
 import com.returdev.animemanga.domain.model.core.GenreModel
 import com.returdev.animemanga.domain.model.core.ReleasedModel
 import com.returdev.animemanga.domain.model.core.TitleModel
+import com.returdev.animemanga.ui.model.basic.MangaBasicUi
 import com.returdev.animemanga.ui.model.basic.VisualMediaBasicUi
+import com.returdev.animemanga.ui.model.core.ReleasedUi
 import com.returdev.animemanga.ui.model.core.TitleUi
 
 /**
@@ -26,16 +28,25 @@ import com.returdev.animemanga.ui.model.core.TitleUi
  * @property published The release information, including start/end publication dates.
  */
 data class MangaDetailedUi(
-    override val basicInfo: VisualMediaBasicUi,
-    override val extraTitles: List<TitleUi>,
-    override val numberOfScorers: Long,
-    override val rank: Int,
-    override val synopsis: String,
-    override val status: String,
-    override val demographics: List<GenreModel>,
-    override val genres: List<GenreModel>,
+    override val basicInfo : MangaBasicUi,
+    override val extraTitles : List<TitleUi>,
+    override val numberOfScorers : Long,
+    override val rank : Int,
+    override val synopsis : String,
+    override val status : String,
+    override val demographics : List<GenreModel>,
+    override val genres : List<GenreModel>,
     val chapters : Int,
     val volumes : Int,
     val isPublishing : Boolean,
-    val published : ReleasedModel
-) : VisualMediaDetailedUi()
+    val published : ReleasedUi
+) : VisualMediaDetailedUi() {
+    override fun getInfoFields() : List<Pair<String, String>> {
+        return listOf(
+            Pair("Chapters", this.chapters.toString()),
+            Pair("Volumes", this.volumes.toString()),
+            Pair("Status", this.status),
+            Pair("Published", this.published.toString())
+        )
+    }
+}
