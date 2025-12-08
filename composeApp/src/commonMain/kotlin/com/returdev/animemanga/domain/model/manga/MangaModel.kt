@@ -25,7 +25,7 @@ import com.returdev.animemanga.domain.model.visualmedia.VisualMediaModel
  * @property published Release information containing start and end dates.
  */
 data class MangaModel(
-    override val basicInfo: VisualMediaBasicModel,
+    override val basicInfo: MangaBasicModel,
     override val extraTitles: List<TitleModel>,
     override val numberOfScorers: Long,
     override val rank: Int,
