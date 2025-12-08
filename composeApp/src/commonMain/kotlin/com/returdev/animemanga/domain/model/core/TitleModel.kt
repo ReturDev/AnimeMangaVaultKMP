@@ -5,18 +5,27 @@ package com.returdev.animemanga.domain.model.core
  *
  * @property title The actual title string.
  */
-sealed class TitleModel {
+sealed class TitleModel(
+    val title : String
+) {
 
+    abstract val titleType : String
 
-    abstract val title: String
+    class DefaultTitle(title : String) : TitleModel(title) {
+        override val titleType : String = "Default"
+    }
 
-    class DefaultTitle (override val title: String) : TitleModel()
+    class JapaneseTitle(title : String) : TitleModel(title) {
+        override val titleType : String = "Japanese"
+    }
 
-    class JapaneseTitle (override val title: String) : TitleModel()
+    class EnglishTitle(title : String) : TitleModel(title) {
+        override val titleType : String = "English"
+    }
 
-    class EnglishTitle (override val title: String) : TitleModel()
-
-    class SynonymTitle (override val title: String) : TitleModel()
+    class SynonymTitle(title : String) : TitleModel(title) {
+        override val titleType : String = "Synonym"
+    }
 
     companion object {
         /**
@@ -26,7 +35,7 @@ sealed class TitleModel {
          * @param title The actual title string.
          * @return The corresponding TitleModel instance, or null if the key is invalid.
          */
-        fun getTitle(titleKey: String, title: String): TitleModel? {
+        fun getTitle(titleKey : String, title : String) : TitleModel? {
             return when (TitleKey.fromString(titleKey)) {
                 TitleKey.DEFAULT -> DefaultTitle(title)
                 TitleKey.JAPANESE -> JapaneseTitle(title)
@@ -50,7 +59,7 @@ sealed class TitleModel {
              * @param title The string to convert.
              * @return The corresponding TitleKey, or null if the string does not match any key.
              */
-            fun fromString(title: String): TitleKey? =
+            fun fromString(title : String) : TitleKey? =
                 runCatching { valueOf(title.uppercase()) }.getOrNull()
         }
     }
