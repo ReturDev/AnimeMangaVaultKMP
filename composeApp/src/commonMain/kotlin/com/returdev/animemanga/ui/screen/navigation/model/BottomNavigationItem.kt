@@ -43,28 +43,28 @@ sealed class BottomNavigationItem(
 
     /** Bottom navigation item for the Home screen. */
     object Home : BottomNavigationItem(
-        destination = Destination.Home,
+        destination = Destination.NoArgumentDestination.Home,
         icon = Res.drawable.ic_home,
         label = Res.string.nav_label_home
     )
 
     /** Bottom navigation item for the Anime Search screen. */
     object AnimeSearch : BottomNavigationItem(
-        destination = Destination.AnimeSearch,
+        destination = Destination.NoArgumentDestination.AnimeSearch,
         icon = Res.drawable.ic_anime,
         label = Res.string.nav_label_anime
     )
 
     /** Bottom navigation item for the Manga Search screen. */
     object MangaSearch : BottomNavigationItem(
-        destination = Destination.MangaSearch,
+        destination = Destination.NoArgumentDestination.MangaSearch,
         icon = Res.drawable.ic_manga,
         label = Res.string.nav_label_manga
     )
 
     /** Bottom navigation item for the Library screen. */
     object Library : BottomNavigationItem(
-        destination = Destination.Library,
+        destination = Destination.NoArgumentDestination.Library,
         icon = Res.drawable.ic_library,
         label = Res.string.nav_label_library
     )
