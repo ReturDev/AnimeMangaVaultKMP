@@ -3,17 +3,13 @@ package com.returdev.animemanga.ui.core.composable.list.grid
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
 import com.returdev.animemanga.ui.core.composable.item.basic.BasicVisualMediaItem
 import com.returdev.animemanga.ui.model.basic.VisualMediaBasicUi
-import kotlinx.coroutines.flow.Flow
 
 /**
  * A vertically scrolling grid layout for displaying visual media items (anime, manga, etc.).
@@ -39,15 +35,18 @@ fun <T : VisualMediaBasicUi> VisualMediaGrid(
         verticalArrangement = Arrangement.spacedBy(VisualMediaGridDefaults.spaceBetweenItems),
         contentPadding = PaddingValues(4.dp),
 
-    ) {
-        items(count = items.itemCount, key = { items[it]?.id ?: it }) {
+        ) {
+        items(count = items.itemCount, key = { index ->
+            val item = items.peek(index)
+            "${item?.id ?: index}-$index"
+        }) {
             items[it]?.let { item ->
                 BasicVisualMediaItem(
                     imageUrl = item.image.url,
                     title = item.title,
                     rate = item.score,
                     type = item.type.typeName,
-                    onClick = {onItemClick(item.id)}
+                    onClick = { onItemClick(item.id) }
                 )
 
             }
