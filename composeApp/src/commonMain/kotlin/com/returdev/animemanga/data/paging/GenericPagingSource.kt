@@ -55,7 +55,7 @@ class GenericPagingSource<T, R : Any>(
             return PagingConfig(
                 pageSize = PAGE_SIZE,
                 prefetchDistance = PREFETCH_DISTANCE,
-                maxSize = PAGE_SIZE * 6
+                maxSize = PAGE_SIZE * 4
             )
         }
     }
