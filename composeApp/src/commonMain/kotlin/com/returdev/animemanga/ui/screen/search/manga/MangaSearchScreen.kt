@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.returdev.animemanga.ui.model.core.MediaCategory
 import com.returdev.animemanga.ui.screen.search.SearchScreen
+import org.koin.compose.viewmodel.koinViewModel
 
 /**
  * A composable screen that allows the user to search for manga.
@@ -21,7 +22,7 @@ fun MangaSearchScreen(
     navigateToDetailScreen : (Int, MediaCategory) -> Unit
 ) {
 
-    val viewModel : MangaSearchViewModel = viewModel()
+    val viewModel : MangaSearchViewModel = koinViewModel()
 
     SearchScreen(
         modifier = modifier,

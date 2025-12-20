@@ -1,6 +1,8 @@
 package com.returdev.animemanga.ui.screen.search.manga
 
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.returdev.animemanga.data.repository.MangaRepository
 import com.returdev.animemanga.domain.model.core.search.SearchFilters
@@ -33,13 +35,13 @@ class MangaSearchViewModel(
      *
      * @return A [Flow] of [PagingData] containing [MangaBasicUi] items.
      */
-    override suspend fun initialSearch(): Flow<PagingData<MangaBasicUi>> {
+    override suspend fun initialSearch() : Flow<PagingData<MangaBasicUi>> {
         return mangaRepository.getMangaSearch(
             query = "",
             filters = SearchFilters.MangaFilters(
                 type = MangaTypeFilters.MANGA
             )
-        ).map { pagingData -> pagingData.map { it.toUi() }}
+        ).map { pagingData -> pagingData.map { it.toUi() } }.cachedIn(viewModelScope)
     }
 
     /**
@@ -52,6 +54,6 @@ class MangaSearchViewModel(
         return mangaRepository.getMangaSearch(
             query = query,
             filters = SearchFilters.MangaFilters()
-        ).map { pagingData -> pagingData.map { it.toUi() } }
+        ).map { pagingData -> pagingData.map { it.toUi() } }.cachedIn(viewModelScope)
     }
 }
