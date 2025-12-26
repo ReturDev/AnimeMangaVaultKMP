@@ -83,6 +83,17 @@ fun HomeScreen(
         with(ShowMoreSection.TOP_MANGA) {
             MediaSection(
                 title = this.getTitle(),
+                items = topManga,
+                infiniteTransition = infiniteTransition,
+                onShowMore = { navigateToShowMore(this) },
+                onRetryClick = { viewModel.getTopManga() },
+                onItemClick = { id -> navigateToItemDetail(id, this.category) }
+            )
+        }
+
+        with(ShowMoreSection.CURRENT_SEASON) {
+            MediaSection(
+                title = this.getTitle(),
                 items = animeCurrentSeason,
                 infiniteTransition = infiniteTransition,
                 onShowMore = { navigateToShowMore(ShowMoreSection.CURRENT_SEASON) },
@@ -91,17 +102,6 @@ fun HomeScreen(
             )
         }
 
-        with(ShowMoreSection.CURRENT_SEASON) {
-            MediaSection(
-                title = this.getTitle(),
-                items = topManga,
-                infiniteTransition = infiniteTransition,
-                onShowMore = { navigateToShowMore(this) },
-                onRetryClick = { viewModel.getTopManga() },
-                onItemClick = { id -> navigateToItemDetail(id, this.category) }
-            )
-
-        }
     }
 }
 
