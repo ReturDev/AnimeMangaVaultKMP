@@ -97,7 +97,7 @@ fun HomeScreen(
                 items = animeCurrentSeason,
                 infiniteTransition = infiniteTransition,
                 onShowMore = { navigateToShowMore(ShowMoreSection.CURRENT_SEASON) },
-                onRetryClick = { viewModel.getAnimeCurrentSeason()},
+                onRetryClick = { viewModel.getAnimeCurrentSeason() },
                 onItemClick = { id -> navigateToItemDetail(id, MediaCategory.ANIME) }
             )
         }
@@ -130,12 +130,14 @@ private fun <T : VisualMediaBasicUi> MediaSection(
                     onItemClick = onItemClick
                 )
             }
+
             items.loadState.refresh is LoadState.Loading && items.itemCount == 0 -> {
                 VisualMediaLoadingRow(
                     modifier = Modifier.height(sectionContentHeight),
                     transition = infiniteTransition
                 )
             }
+
             items.loadState.refresh is LoadState.Error -> {
                 ErrorStateCard(
                     retryButtonVisible = true,
@@ -145,7 +147,6 @@ private fun <T : VisualMediaBasicUi> MediaSection(
         }
     }
 }
-
 
 
 /**
