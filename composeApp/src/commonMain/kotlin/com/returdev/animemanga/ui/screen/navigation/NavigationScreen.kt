@@ -1,9 +1,12 @@
 package com.returdev.animemanga.ui.screen.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -16,13 +19,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import animemangavaultkmp.composeapp.generated.resources.Res
+import animemangavaultkmp.composeapp.generated.resources.ic_nav_back
+import animemangavaultkmp.composeapp.generated.resources.nav_back_button_content_description
 import com.returdev.animemanga.ui.screen.navigation.graph.NavigationGraph
 import com.returdev.animemanga.ui.screen.navigation.model.BottomNavigationItem
+import com.returdev.animemanga.ui.screen.navigation.model.TopAppBarInfo
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+
 
 private val bottomBarItems = listOf(
     BottomNavigationItem.Home,
@@ -42,22 +52,30 @@ fun NavigationScreen(
 ) {
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-    var showAppBars by remember { mutableStateOf(true) }
-    var navigationItemSelected by remember { mutableStateOf<BottomNavigationItem>(BottomNavigationItem.Home) }
+
+    var showBottomBar by remember { mutableStateOf(true) }
+    var topAppBarInfo by remember { mutableStateOf<TopAppBarInfo?>(null) }
+    var navigationItemSelected by remember {
+        mutableStateOf<BottomNavigationItem>(
+            BottomNavigationItem.Home
+        )
+    }
 
     LaunchedEffect(backStackEntry) {
         val currentRoute = backStackEntry?.destination?.route
-        val isBottomItemDestination = currentRoute in bottomBarItems.map { it.destination.route }
-        showAppBars = isBottomItemDestination
-        if (isBottomItemDestination){
-            navigationItemSelected = bottomBarItems.first{ it.destination.route == currentRoute}
+        showBottomBar = currentRoute in bottomBarItems.map { it.destination.templateRoute }
+        if (showBottomBar) {
+            navigationItemSelected =
+                bottomBarItems.first { it.destination.templateRoute == currentRoute }
         }
     }
+
+
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            if (showAppBars){
+            if (showBottomBar) {
                 NavigationBottomBar(
                     navController = navController,
                     itemSelected = navigationItemSelected
@@ -65,16 +83,21 @@ fun NavigationScreen(
             }
         },
         topBar = {
-            if (showAppBars){
+
+            topAppBarInfo?.let {
                 TopBar(
-                    title = stringResource(navigationItemSelected.label)
+                    title = it.title,
+                    showBackIcon = it.showBackIcon,
+                    onBackClick = { navController.popBackStack() }
                 )
             }
+
         }
     ) { paddingValues ->
         NavigationGraph(
             modifier = Modifier.padding(paddingValues),
-            controller = navController
+            controller = navController,
+            setTopAppBarInfo = { topAppBarInfo = it }
         )
     }
 
@@ -89,13 +112,13 @@ fun NavigationScreen(
 @Composable
 private fun NavigationBottomBar(
     navController : NavController,
-    itemSelected  : BottomNavigationItem
+    itemSelected : BottomNavigationItem
 ) {
 
-    BottomAppBar{
-        bottomBarItems.forEachIndexed { index, item ->
+    BottomAppBar {
+        bottomBarItems.forEach { item ->
             NavigationBarItem(
-                icon =  item.iconComp,
+                icon = item.iconComp,
                 label = {
                     Text(
                         text = stringResource(item.label),
@@ -103,9 +126,9 @@ private fun NavigationBottomBar(
                 },
                 alwaysShowLabel = false,
                 selected = item == itemSelected,
-                onClick = { navController.navigate(item.destination.route)},
+                onClick = { navController.navigate(item.destination.templateRoute) },
 
-            )
+                )
         }
     }
 
@@ -120,15 +143,35 @@ private fun NavigationBottomBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopBar(
-    title : String
+    title : String?,
+    showBackIcon : Boolean,
+    onBackClick : () -> Unit
 ) {
 
     TopAppBar(
         title = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.displaySmall
-            )
+            title?.let {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = title,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.StartEllipsis,
+                    style = MaterialTheme.typography.displaySmall
+                )
+            }
+        },
+        navigationIcon = {
+            if (showBackIcon) {
+                IconButton(
+                    onClick = onBackClick
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_nav_back),
+                        contentDescription = stringResource(Res.string.nav_back_button_content_description)
+                    )
+                }
+            }
         }
     )
 }
